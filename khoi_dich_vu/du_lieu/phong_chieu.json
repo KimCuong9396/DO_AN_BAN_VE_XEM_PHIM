@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "ten": "Phòng 1",
+    "so_ghe": 100,
+    "loai": "100 ghế"
+  },
+  {
+    "id": 2,
+    "ten": "Phòng 2",
+    "so_ghe": 60,
+    "loai": "60 ghế"
+  },
+  {
+    "id": 3,
+    "ten": "Phòng 3",
+    "so_ghe": 100,
+    "loai": "100 ghế"
+  },
+  {
+    "id": 4,
+    "ten": "Phòng 4",
+    "so_ghe": 60,
+    "loai": "60 ghế"
+  }
+]

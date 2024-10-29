@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "ten": "Phim A",
+    "the_loai": "Hành động",
+    "thoi_gian": 120,
+    "dao_dien": "Đạo diễn A"
+  },
+  {
+    "id": 2,
+    "ten": "Phim B",
+    "the_loai": "Hài",
+    "thoi_gian": 90,
+    "dao_dien": "Đạo diễn B"
+  },
+  {
+    "id": 3,
+    "ten": "Phim C",
+    "the_loai": "Kinh dị",
+    "thoi_gian": 100,
+    "dao_dien": "Đạo diễn C"
+  }
+]

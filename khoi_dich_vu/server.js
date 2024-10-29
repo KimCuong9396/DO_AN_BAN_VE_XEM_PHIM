@@ -1,13 +1,13 @@
 const express = require("express");
-const app = express();
 const bodyParser = require("body-parser");
-const routes = require("./routes");
+const nhanVienRoutes = require("./routes/nhan_vien");
 
-app.use(bodyParser.json());
-app.use("/api", routes);
-
+const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(bodyParser.json());
+app.use("/api", nhanVienRoutes);
+
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

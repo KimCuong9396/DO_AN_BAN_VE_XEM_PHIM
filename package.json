@@ -1,4 +1,11 @@
 {
+  "name": "khoi_dich_vu",
+  "version": "1.0.0",
+  "description": "Khối dịch vụ của ứng dụng bán vé xem phim",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "express": "^4.21.1"
   }

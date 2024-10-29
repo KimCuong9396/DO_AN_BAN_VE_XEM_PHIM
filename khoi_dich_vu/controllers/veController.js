@@ -1,29 +1,40 @@
 const fs = require("fs");
 const path = require("path");
+
 const veDataPath = path.join(__dirname, "../du_lieu/ve.json");
 
-exports.getVe = (req, res) => {
-  fs.readFile(veDataPath, "utf8", (err, data) => {
-    if (err) {
-      return res.status(500).json({ message: "Lỗi đọc dữ liệu" });
-    }
-    res.json(JSON.parse(data));
+const layTatCaVe = (req, res) => {
+  fs.readFile(veDataPath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ success: false });
+
+    const veList = JSON.parse(data);
+    res.json({ success: true, data: veList });
   });
 };
 
-exports.addVe = (req, res) => {
-  const newVe = req.body;
-  fs.readFile(veDataPath, "utf8", (err, data) => {
-    if (err) {
-      return res.status(500).json({ message: "Lỗi đọc dữ liệu" });
-    }
+const datVe = (req, res) => {
+  const { tenPhim, soLuong } = req.body;
+
+  fs.readFile(veDataPath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ success: false });
+
     const veList = JSON.parse(data);
-    veList.push(newVe);
-    fs.writeFile(veDataPath, JSON.stringify(veList), (err) => {
-      if (err) {
-        return res.status(500).json({ message: "Lỗi ghi dữ liệu" });
-      }
-      res.status(201).json(newVe);
-    });
+    const ve = veList.find((v) => v.ten === tenPhim);
+
+    if (ve && ve.so_luong_da_ban + soLuong <= ve.so_luong) {
+      ve.so_luong_da_ban += soLuong;
+
+      fs.writeFile(veDataPath, JSON.stringify(veList, null, 2), (err) => {
+        if (err) return res.status(500).json({ success: false });
+
+        return res.json({ success: true, message: "Đặt vé thành công" });
+      });
+    } else {
+      return res
+        .status(400)
+        .json({ success: false, message: "Số vé không đủ" });
+    }
   });
 };
+
+module.exports = { layTatCaVe, datVe };

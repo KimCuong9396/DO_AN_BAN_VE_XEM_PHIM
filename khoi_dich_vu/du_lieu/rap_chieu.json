@@ -1,0 +1,5 @@
+[
+  { "ten": "Rạp 1", "dia_chi": "123 Đường A", "so_ghe": 100 },
+  { "ten": "Rạp 2", "dia_chi": "456 Đường B", "so_ghe": 60 },
+  { "ten": "Rạp 3", "dia_chi": "789 Đường C", "so_ghe": 100 }
+]

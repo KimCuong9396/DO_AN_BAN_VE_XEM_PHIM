@@ -1,29 +1,34 @@
 const fs = require("fs");
 const path = require("path");
+
 const phimDataPath = path.join(__dirname, "../du_lieu/phim.json");
 
-exports.getPhim = (req, res) => {
-  fs.readFile(phimDataPath, "utf8", (err, data) => {
-    if (err) {
-      return res.status(500).json({ message: "Lỗi đọc dữ liệu" });
-    }
-    res.json(JSON.parse(data));
+const layTatCaPhim = (req, res) => {
+  fs.readFile(phimDataPath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ success: false });
+
+    const phimList = JSON.parse(data);
+    res.json({ success: true, data: phimList });
   });
 };
 
-exports.addPhim = (req, res) => {
-  const newPhim = req.body;
-  fs.readFile(phimDataPath, "utf8", (err, data) => {
-    if (err) {
-      return res.status(500).json({ message: "Lỗi đọc dữ liệu" });
-    }
+const layPhimTheoId = (req, res) => {
+  const { id } = req.params;
+
+  fs.readFile(phimDataPath, "utf-8", (err, data) => {
+    if (err) return res.status(500).json({ success: false });
+
     const phimList = JSON.parse(data);
-    phimList.push(newPhim);
-    fs.writeFile(phimDataPath, JSON.stringify(phimList), (err) => {
-      if (err) {
-        return res.status(500).json({ message: "Lỗi ghi dữ liệu" });
-      }
-      res.status(201).json(newPhim);
-    });
+    const phim = phimList.find((p) => p.id == id);
+
+    if (phim) {
+      return res.json({ success: true, data: phim });
+    } else {
+      return res
+        .status(404)
+        .json({ success: false, message: "Phim không tồn tại" });
+    }
   });
 };
+
+module.exports = { layTatCaPhim, layPhimTheoId };

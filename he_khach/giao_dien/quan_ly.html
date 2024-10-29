@@ -4,31 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
-    <title>Quản Lý</title>
+    <title>Giao Diện Quản Lý</title>
   </head>
   <body>
-    <h2>Lập Lịch Chiếu Phim</h2>
-    <form id="lap-lich-form">
-      <label for="ten-phim">Tên phim:</label>
-      <input type="text" id="ten-phim" name="ten-phim" required />
-      <br />
-      <label for="ca-chieu">Ca chiếu:</label>
-      <select id="ca-chieu" name="ca-chieu" required>
-        <option value="sang">Sáng</option>
-        <option value="chieu">Chiều</option>
-        <option value="toi_1">Tối 1</option>
-        <option value="toi_2">Tối 2</option>
-      </select>
-      <br />
-      <label for="ngay-chieu">Ngày chiếu:</label>
-      <input type="date" id="ngay-chieu" name="ngay-chieu" required />
-      <br />
-      <label for="so-ve">Số vé bán:</label>
-      <input type="number" id="so-ve" name="so-ve" required />
-      <br />
-      <button type="submit">Lập lịch</button>
-    </form>
-    <div id="thong-ke"></div>
-    <script src="js/ban_ve.js"></script>
+    <h1>Giao Diện Quản Lý</h1>
+    <button onclick="thongKe()">Thống Kê</button>
+    <script src="js/quan_ly.js"></script>
   </body>
 </html>
