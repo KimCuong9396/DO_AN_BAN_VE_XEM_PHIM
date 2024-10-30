@@ -1,40 +1,65 @@
 const fs = require("fs");
 const path = require("path");
+const filePath = path.join(__dirname, "../du_lieu/ve.json");
 
-const veDataPath = path.join(__dirname, "../du_lieu/ve.json");
-
-const layTatCaVe = (req, res) => {
-  fs.readFile(veDataPath, "utf-8", (err, data) => {
-    if (err) return res.status(500).json({ success: false });
-
-    const veList = JSON.parse(data);
-    res.json({ success: true, data: veList });
-  });
+// Đọc dữ liệu từ file JSON
+const readData = () => {
+  const data = fs.readFileSync(filePath);
+  return JSON.parse(data);
 };
 
-const datVe = (req, res) => {
-  const { tenPhim, soLuong } = req.body;
-
-  fs.readFile(veDataPath, "utf-8", (err, data) => {
-    if (err) return res.status(500).json({ success: false });
-
-    const veList = JSON.parse(data);
-    const ve = veList.find((v) => v.ten === tenPhim);
-
-    if (ve && ve.so_luong_da_ban + soLuong <= ve.so_luong) {
-      ve.so_luong_da_ban += soLuong;
-
-      fs.writeFile(veDataPath, JSON.stringify(veList, null, 2), (err) => {
-        if (err) return res.status(500).json({ success: false });
-
-        return res.json({ success: true, message: "Đặt vé thành công" });
-      });
-    } else {
-      return res
-        .status(400)
-        .json({ success: false, message: "Số vé không đủ" });
-    }
-  });
+// Ghi dữ liệu vào file JSON
+const writeData = (data) => {
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 };
 
-module.exports = { layTatCaVe, datVe };
+// Lấy tất cả vé
+exports.getAll = (req, res) => {
+  const ve = readData();
+  res.json(ve);
+};
+
+// Tạo vé mới
+exports.create = (req, res) => {
+  const ve = readData();
+  const newVe = { id: Date.now(), ...req.body };
+  ve.push(newVe);
+  writeData(ve);
+  res.status(201).json(newVe);
+};
+
+// Lấy vé theo ID
+exports.getById = (req, res) => {
+  const ve = readData();
+  const foundVe = ve.find((v) => v.id == req.params.id);
+  if (foundVe) {
+    res.json(foundVe);
+  } else {
+    res.status(404).send("Vé không tồn tại");
+  }
+};
+
+// Cập nhật vé
+exports.update = (req, res) => {
+  const ve = readData();
+  const foundIndex = ve.findIndex((v) => v.id == req.params.id);
+  if (foundIndex !== -1) {
+    ve[foundIndex] = { id: ve[foundIndex].id, ...req.body };
+    writeData(ve);
+    res.json(ve[foundIndex]);
+  } else {
+    res.status(404).send("Vé không tồn tại");
+  }
+};
+
+// Xóa vé
+exports.delete = (req, res) => {
+  const ve = readData();
+  const filteredVe = ve.filter((v) => v.id != req.params.id);
+  if (filteredVe.length === ve.length) {
+    res.status(404).send("Vé không tồn tại");
+  } else {
+    writeData(filteredVe);
+    res.status(204).send();
+  }
+};

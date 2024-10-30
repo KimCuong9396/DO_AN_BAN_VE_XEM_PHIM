@@ -1,19 +1,30 @@
 const fs = require("fs");
 const path = require("path");
 
-const veDataPath = path.join(__dirname, "../du_lieu/ve.json");
+const veFilePath = path.join(__dirname, "../du_lieu/ve.json");
+const phimFilePath = path.join(__dirname, "../du_lieu/phim.json");
 
-const thongKeVe = (req, res) => {
-  fs.readFile(veDataPath, "utf-8", (err, data) => {
-    if (err) return res.status(500).json({ success: false });
-
-    const veList = JSON.parse(data);
-    const tongVeDaBan = veList.reduce(
-      (total, ve) => total + ve.so_luong_da_ban,
-      0
-    );
-    res.json({ success: true, data: { tongVeDaBan } });
-  });
+// Đọc dữ liệu từ file JSON
+const readVeData = () => {
+  const data = fs.readFileSync(veFilePath);
+  return JSON.parse(data);
 };
 
-module.exports = { thongKeVe };
+const readPhimData = () => {
+  const data = fs.readFileSync(phimFilePath);
+  return JSON.parse(data);
+};
+
+// Lấy thống kê
+exports.getStatistics = (req, res) => {
+  const ve = readVeData();
+  const phim = readPhimData();
+
+  const totalVe = ve.length;
+  const totalPhim = phim.length;
+
+  res.json({
+    totalVe,
+    totalPhim,
+  });
+};
