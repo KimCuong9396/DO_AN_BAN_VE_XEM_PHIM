@@ -1,14 +1,12 @@
 [
   {
-    "id": 1,
     "username": "nhanvien1",
-    "password": "1234",
+    "password": "password1",
     "role": "nhan_vien"
   },
   {
-    "id": 2,
     "username": "quanly1",
-    "password": "abcd",
+    "password": "password2",
     "role": "quan_ly"
   }
 ]

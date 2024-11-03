@@ -1,11 +1,14 @@
-// /khoi_dich_vu/server.js
 const express = require("express");
-const app = express();
-const authRoutes = require("./routes/authRoutes");
-app.use(express.json());
+const bodyParser = require("body-parser");
+const authRoutes = require("./routes/auth");
 
-app.use("/auth", authRoutes);
+const app = express();
+app.use(bodyParser.json());
+
+app.use("/api/auth", authRoutes);
+
+app.use(express.static("he_khach/giao_dien"));
 
 app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+  console.log("Server is running on http://localhost:3000");
 });

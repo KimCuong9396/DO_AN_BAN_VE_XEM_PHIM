@@ -1,19 +1,21 @@
-<!-- /he_khach/giao_dien/login.html -->
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Đăng nhập</title>
-    <link rel="stylesheet" href="css/login.css" />
+    <title>Đăng Nhập</title>
+    <script src="login.js" defer></script>
   </head>
   <body>
-    <div id="loginForm">
-      <h2>Đăng nhập</h2>
-      <input type="text" id="username" placeholder="Tên đăng nhập" required />
-      <input type="password" id="password" placeholder="Mật khẩu" required />
-      <button onclick="login()">Đăng nhập</button>
-      <p id="errorMsg"></p>
-    </div>
-    <script src="js/login.js"></script>
+    <h2>Đăng Nhập</h2>
+    <form id="loginForm">
+      <label for="username">Tên đăng nhập:</label>
+      <input type="text" id="username" name="username" required />
+      <br />
+      <label for="password">Mật khẩu:</label>
+      <input type="password" id="password" name="password" required />
+      <br />
+      <button type="submit">Đăng nhập</button>
+    </form>
+    <div id="error" style="color: red"></div>
   </body>
 </html>
