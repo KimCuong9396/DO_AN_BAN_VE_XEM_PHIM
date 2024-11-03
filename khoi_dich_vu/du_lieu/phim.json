@@ -1,23 +1,26 @@
 [
   {
-    "id": 1,
-    "ten": "Phim A",
-    "the_loai": "Hành động",
-    "thoi_gian": 120,
-    "dao_dien": "Đạo diễn A"
+    "tenPhim": "Avengers: Endgame",
+    "theLoai": "Hành động",
+    "thoiLuong": 181,
+    "daoDien": "Anthony Russo, Joe Russo"
   },
   {
-    "id": 2,
-    "ten": "Phim B",
-    "the_loai": "Hài",
-    "thoi_gian": 90,
-    "dao_dien": "Đạo diễn B"
+    "tenPhim": "Titanic",
+    "theLoai": "Tâm lý",
+    "thoiLuong": 195,
+    "daoDien": "James Cameron"
   },
   {
-    "id": 3,
-    "ten": "Phim C",
-    "the_loai": "Kinh dị",
-    "thoi_gian": 100,
-    "dao_dien": "Đạo diễn C"
+    "tenPhim": "Inception",
+    "theLoai": "Khoa học viễn tưởng",
+    "thoiLuong": 148,
+    "daoDien": "Christopher Nolan"
+  },
+  {
+    "tenPhim": "The Lion King",
+    "theLoai": "Hoạt hình",
+    "thoiLuong": 88,
+    "daoDien": "Roger Allers, Rob Minkoff"
   }
 ]

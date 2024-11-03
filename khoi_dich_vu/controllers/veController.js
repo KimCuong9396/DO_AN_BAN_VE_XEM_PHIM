@@ -1,65 +1,33 @@
+// /khoi_dich_vu/controllers/veController.js
 const fs = require("fs");
 const path = require("path");
-const filePath = path.join(__dirname, "../du_lieu/ve.json");
 
-// Đọc dữ liệu từ file JSON
-const readData = () => {
-  const data = fs.readFileSync(filePath);
-  return JSON.parse(data);
-};
+// Bán vé
+exports.banVe = (req, res) => {
+  const { xuatChieuId, soLuongVe } = req.body;
+  const veDataPath = path.join(__dirname, "../../du_lieu/ban_ve.json");
+  const xuatChieuDataPath = path.join(
+    __dirname,
+    "../../du_lieu/xuat_chieu.json"
+  );
 
-// Ghi dữ liệu vào file JSON
-const writeData = (data) => {
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-};
+  let veData = JSON.parse(fs.readFileSync(veDataPath, "utf-8"));
+  let xuatChieuData = JSON.parse(fs.readFileSync(xuatChieuDataPath, "utf-8"));
 
-// Lấy tất cả vé
-exports.getAll = (req, res) => {
-  const ve = readData();
-  res.json(ve);
-};
+  const xuatChieu = xuatChieuData.find((xc) => xc.id === xuatChieuId);
 
-// Tạo vé mới
-exports.create = (req, res) => {
-  const ve = readData();
-  const newVe = { id: Date.now(), ...req.body };
-  ve.push(newVe);
-  writeData(ve);
-  res.status(201).json(newVe);
-};
+  if (xuatChieu && xuatChieu.soGheTrong >= soLuongVe) {
+    // Giảm số ghế trống và cập nhật
+    xuatChieu.soGheTrong -= soLuongVe;
+    fs.writeFileSync(xuatChieuDataPath, JSON.stringify(xuatChieuData));
 
-// Lấy vé theo ID
-exports.getById = (req, res) => {
-  const ve = readData();
-  const foundVe = ve.find((v) => v.id == req.params.id);
-  if (foundVe) {
-    res.json(foundVe);
+    // Lưu dữ liệu vé mới vào ban_ve.json
+    const newVe = { id: veData.length + 1, xuatChieuId, soLuongVe };
+    veData.push(newVe);
+    fs.writeFileSync(veDataPath, JSON.stringify(veData));
+
+    res.status(200).json({ message: "Bán vé thành công" });
   } else {
-    res.status(404).send("Vé không tồn tại");
-  }
-};
-
-// Cập nhật vé
-exports.update = (req, res) => {
-  const ve = readData();
-  const foundIndex = ve.findIndex((v) => v.id == req.params.id);
-  if (foundIndex !== -1) {
-    ve[foundIndex] = { id: ve[foundIndex].id, ...req.body };
-    writeData(ve);
-    res.json(ve[foundIndex]);
-  } else {
-    res.status(404).send("Vé không tồn tại");
-  }
-};
-
-// Xóa vé
-exports.delete = (req, res) => {
-  const ve = readData();
-  const filteredVe = ve.filter((v) => v.id != req.params.id);
-  if (filteredVe.length === ve.length) {
-    res.status(404).send("Vé không tồn tại");
-  } else {
-    writeData(filteredVe);
-    res.status(204).send();
+    res.status(400).json({ message: "Không đủ ghế trống" });
   }
 };

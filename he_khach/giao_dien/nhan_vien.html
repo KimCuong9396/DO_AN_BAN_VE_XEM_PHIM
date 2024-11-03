@@ -1,15 +1,20 @@
+<!-- /he_khach/giao_dien/nhan_vien.html -->
 <!DOCTYPE html>
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
-    <title>Giao Diện Nhân Viên</title>
+    <title>Nhân Viên Bán Vé</title>
   </head>
   <body>
-    <h1>Giao Diện Nhân Viên</h1>
-    <button onclick="banVe()">Bán Vé</button>
-    <button onclick="traCuu()">Tra Cứu Vé</button>
-    <script src="js/nhan_vien.js"></script>
+    <h1>Chức năng Nhân viên</h1>
+    <ul>
+      <li><a href="#" onclick="showBanVe()">Bán Vé</a></li>
+      <li><a href="#" onclick="showTraCuu()">Tra cứu Xuất Chiếu</a></li>
+    </ul>
+
+    <div id="content"></div>
+
+    <script src="js/ban_ve.js"></script>
+    <script src="js/tra_cuu.js"></script>
   </body>
 </html>

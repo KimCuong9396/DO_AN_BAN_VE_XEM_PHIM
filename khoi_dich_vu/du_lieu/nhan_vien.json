@@ -1,6 +1,14 @@
 [
-  { "username": "nv1", "password": "pass1", "role": "nhan_vien" },
-  { "username": "ql1", "password": "pass2", "role": "quan_ly" },
-  { "username": "nv2", "password": "pass3", "role": "nhan_vien" },
-  { "username": "ql2", "password": "pass4", "role": "quan_ly" }
+  {
+    "id": 1,
+    "username": "nhanvien1",
+    "password": "1234",
+    "role": "nhan_vien"
+  },
+  {
+    "id": 2,
+    "username": "quanly1",
+    "password": "abcd",
+    "role": "quan_ly"
+  }
 ]

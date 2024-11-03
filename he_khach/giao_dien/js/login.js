@@ -1,26 +1,24 @@
-document
-  .getElementById("loginForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
+// /he_khach/giao_dien/js/login.js
+function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    fetch("http://localhost:3000/api/dang-nhap", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+  fetch("/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.redirect) {
+        window.location.href = data.redirect;
+      } else {
+        document.getElementById("errorMsg").innerText = data.message;
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          if (data.role === "nhan_vien") {
-            window.location.href = "nhan_vien.html";
-          } else {
-            window.location.href = "quan_ly.html";
-          }
-        } else {
-          alert("Đăng nhập thất bại");
-        }
-      });
-  });
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
