@@ -1,14 +1,16 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
-const authRoutes = require("./routes/auth");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
+const PORT = 5000;
+
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/api/auth", authRoutes);
 
-app.use(express.static("he_khach/giao_dien"));
-
-app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000");
+app.listen(PORT, () => {
+  console.log(`Server đang chạy tại http://localhost:${PORT}`);
 });

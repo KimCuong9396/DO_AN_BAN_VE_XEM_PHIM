@@ -5,29 +5,26 @@ document
 
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const errorDiv = document.getElementById("error");
 
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.json();
+      const result = await response.json();
 
       if (response.ok) {
-        if (data.role === "nhan_vien") {
+        if (result.role === "nhanvien") {
           window.location.href = "nhan_vien.html";
-        } else if (data.role === "quan_ly") {
+        } else if (result.role === "quanly") {
           window.location.href = "quan_ly.html";
         }
       } else {
-        errorDiv.textContent = data.message;
+        alert(result.message || "Đã xảy ra lỗi. Vui lòng thử lại.");
       }
     } catch (error) {
-      errorDiv.textContent = "Đã xảy ra lỗi. Vui lòng thử lại.";
+      alert("Không thể kết nối đến server.");
     }
   });
