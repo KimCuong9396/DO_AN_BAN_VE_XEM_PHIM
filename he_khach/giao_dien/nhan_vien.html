@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trang Nhân Viên</title>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <h1>Chào mừng Nhân Viên</h1>
-    <button onclick="logout()">Đăng Xuất</button>
+    <h1>Chào mừng, Nhân viên!</h1>
+    <h2>Danh sách chức năng</h2>
+
     <ul>
-      <li><a href="ban_ve.html">Bán vé</a></li>
-      <li><a href="tra_cuu_xuat_chieu.html">Tra cứu xuất chiếu</a></li>
+      <li><a href="tra_cuu.html">Tra Cứu Lịch Chiếu</a></li>
+      <!-- Các chức năng khác có thể được thêm vào dưới đây -->
     </ul>
 
+    <button onclick="dangXuat()">Đăng Xuất</button>
+
     <script>
-      function logout() {
-        // Quay về trang đăng nhập
+      function dangXuat() {
         window.location.href = "login.html";
       }
     </script>

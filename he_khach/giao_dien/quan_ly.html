@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trang Quản Lý</title>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <h1>Chào mừng Quản Lý</h1>
-    <button onclick="logout()">Đăng Xuất</button>
+    <h1>Chào mừng, Quản lý!</h1>
+    <h2>Danh sách chức năng</h2>
+
     <ul>
-      <li><a href="lap_lich_chieu.html">Lập lịch chiếu</a></li>
-      <li><a href="thong_ke_ban_ve.html">Thống kê bán vé</a></li>
+      <li><a href="tra_cuu.html">Tra Cứu Lịch Chiếu</a></li>
+      <!-- Các chức năng khác có thể được thêm vào dưới đây -->
+      <li><a href="lap_lich_chieu.html">Lập Lịch Chiếu</a></li>
     </ul>
 
+    <button onclick="dangXuat()">Đăng Xuất</button>
+
     <script>
-      function logout() {
-        // Quay về trang đăng nhập
+      function dangXuat() {
         window.location.href = "login.html";
       }
     </script>

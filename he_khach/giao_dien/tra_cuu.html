@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tra Cứu Lịch Chiếu Phim</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <h2>Tra Cứu Lịch Chiếu Phim</h2>
+    <div>
+      <label>Tên Phim:</label>
+      <input type="text" id="ten_phim" placeholder="Nhập tên phim" />
+
+      <label>Ca Chiếu:</label>
+      <select id="ca_chieu">
+        <option value="">Chọn ca</option>
+        <option value="Sáng">Sáng</option>
+        <option value="Chiều">Chiều</option>
+        <option value="Tối">Tối</option>
+      </select>
+
+      <label>Ngày Chiếu:</label>
+      <input type="date" id="ngay_chieu" />
+
+      <button onclick="traCuu()">Tra Cứu</button>
+    </div>
+
+    <div id="ket_qua"></div>
+
+    <button onclick="quayLai()">Quay Lại</button>
+
+    <script src="js/tra_cuu.js"></script>
+    <script>
+      function quayLai() {
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>
