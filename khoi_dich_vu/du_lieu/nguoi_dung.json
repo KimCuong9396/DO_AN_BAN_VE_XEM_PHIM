@@ -1,4 +1,12 @@
 [
-  { "username": "nhanvien1", "password": "password1", "role": "nhanvien" },
-  { "username": "quanly1", "password": "password2", "role": "quanly" }
+  {
+    "username": "nhanvien",
+    "password": "123456",
+    "role": "nhanvien"
+  },
+  {
+    "username": "quanly",
+    "password": "abcdef",
+    "role": "quanly"
+  }
 ]

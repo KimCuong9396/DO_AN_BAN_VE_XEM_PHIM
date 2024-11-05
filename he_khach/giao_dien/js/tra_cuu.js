@@ -1,10 +1,11 @@
+// JavaScript
 function traCuu() {
   const tenPhim = document.getElementById("ten_phim").value;
   const caChieu = document.getElementById("ca_chieu").value;
   const ngayChieu = document.getElementById("ngay_chieu").value;
 
   const query = `ten_phim=${tenPhim}&ca_chieu=${caChieu}&ngay_chieu=${ngayChieu}`;
-  const url = `http://localhost:3000/api/tra_cuu?${query}`;
+  const url = `http://localhost:5000/api/tra_cuu?${query}`;
 
   fetch(url)
     .then((response) => response.json())
@@ -16,13 +17,13 @@ function traCuu() {
         data.forEach((item) => {
           const itemDiv = document.createElement("div");
           itemDiv.innerHTML = `
-                        <p>Tên Phim: ${item.ten_phim}</p>
-                        <p>Ca Chiếu: ${item.ca_chieu}</p>
-                        <p>Ngày Chiếu: ${item.ngay_chieu}</p>
-                        <p>Phòng Chiếu: ${item.phong_chieu}</p>
-                        <p>Số Ghế: ${item.so_ghe}</p>
-                        <hr>
-                    `;
+            <p>Tên Phim: ${item.ten_phim}</p>
+            <p>Ca Chiếu: ${item.ca_chieu}</p>
+            <p>Ngày Chiếu: ${item.ngay_chieu}</p>
+            <p>Phòng Chiếu: ${item.phong_chieu}</p>
+            <p>Số Ghế: ${item.so_ghe}</p>
+            <hr>
+          `;
           ketQuaDiv.appendChild(itemDiv);
         });
       } else {

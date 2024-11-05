@@ -1,30 +1,24 @@
-document
-  .getElementById("loginForm")
-  .addEventListener("submit", async (event) => {
-    event.preventDefault();
+function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        if (result.role === "nhanvien") {
-          window.location.href = "nhan_vien.html";
-        } else if (result.role === "quanly") {
-          window.location.href = "quan_ly.html";
-        }
+  fetch("http://localhost:5000/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.role === "nhanvien") {
+        window.location.href = "nhan_vien.html";
+      } else if (data.role === "quanly") {
+        window.location.href = "quan_ly.html";
       } else {
-        alert(result.message || "Đã xảy ra lỗi. Vui lòng thử lại.");
+        alert("Sai tên đăng nhập hoặc mật khẩu");
       }
-    } catch (error) {
-      alert("Không thể kết nối đến server.");
-    }
-  });
+    })
+    .catch((error) => {
+      console.error("Lỗi khi đăng nhập:", error);
+      alert("Đã xảy ra lỗi. Vui lòng thử lại sau.");
+    });
+}

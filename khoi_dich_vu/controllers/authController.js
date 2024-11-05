@@ -1,29 +1,26 @@
 const fs = require("fs");
 const path = require("path");
 
-// Đọc dữ liệu người dùng từ file JSON
+// Hàm đọc dữ liệu từ file nguoi_dung.json
 const readNguoiDungData = () => {
   const dataPath = path.join(__dirname, "../du_lieu/nguoi_dung.json");
-  const data = fs.readFileSync(dataPath, "utf8");
+  const data = fs.readFileSync(dataPath, "utf-8");
   return JSON.parse(data);
 };
 
-// Xử lý đăng nhập
 const login = (req, res) => {
   const { username, password } = req.body;
   const nguoiDungData = readNguoiDungData();
+
+  // Tìm người dùng trong danh sách
   const user = nguoiDungData.find(
     (u) => u.username === username && u.password === password
   );
 
   if (user) {
-    // Đăng nhập thành công
-    res.status(200).json({ role: user.role });
+    res.status(200).json({ message: "Đăng nhập thành công", role: user.role });
   } else {
-    // Đăng nhập không thành công
-    res
-      .status(401)
-      .json({ message: "Tài khoản hoặc mật khẩu không chính xác." });
+    res.status(401).json({ message: "Sai tên đăng nhập hoặc mật khẩu" });
   }
 };
 
