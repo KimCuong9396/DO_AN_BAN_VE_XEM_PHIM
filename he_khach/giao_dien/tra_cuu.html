@@ -3,33 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tra Cứu Lịch Chiếu</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Tra cứu lịch chiếu phim</title>
+    <!-- Liên kết đến file CSS -->
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <h1>Tra Cứu Lịch Chiếu Phim</h1>
+    <h1>Tra cứu Lịch Chiếu Phim</h1>
+
     <div>
       <label for="ten_phim">Tên Phim:</label>
-      <input type="text" id="ten_phim" placeholder="Nhập tên phim" />
+      <input
+        type="text"
+        id="ten_phim"
+        name="ten_phim"
+        placeholder="Nhập tên phim"
+      />
 
       <label for="ca_chieu">Ca Chiếu:</label>
-      <select id="ca_chieu">
+      <select id="ca_chieu" name="ca_chieu">
         <option value="">Chọn ca chiếu</option>
-        <option value="Sáng">Sáng: 9h00 - 11h00</option>
-        <option value="Chiều">Chiều: 14h00 - 16h00</option>
-        <option value="Tối1">Tối: 18h00 - 20h00</option>
-        <option value="Tối2">Tối: 20h30 - 22h30</option>
+        <option value="Sáng">Sáng (9h00-11h00)</option>
+        <option value="Chiều">Chiều (14h00-16h00)</option>
+        <option value="Tối 1">Tối (18h00-20h00)</option>
+        <option value="Tối 2">Tối (20h30-22h30)</option>
       </select>
 
       <label for="ngay_chieu">Ngày Chiếu:</label>
-      <input type="date" id="ngay_chieu" />
+      <input type="date" id="ngay_chieu" name="ngay_chieu" />
 
       <button onclick="traCuu()">Tra Cứu</button>
     </div>
 
-    <h2>Kết Quả Tra Cứu</h2>
     <div id="ket_qua">
-      <!-- Kết quả sẽ được hiển thị ở đây -->
+      <!-- Kết quả tra cứu sẽ được hiển thị ở đây dưới dạng bảng -->
     </div>
 
     <script src="js/tra_cuu.js"></script>

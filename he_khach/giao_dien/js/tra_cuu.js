@@ -1,4 +1,3 @@
-// JavaScript
 function traCuu() {
   const tenPhim = document.getElementById("ten_phim").value;
   const caChieu = document.getElementById("ca_chieu").value;
@@ -14,18 +13,44 @@ function traCuu() {
       ketQuaDiv.innerHTML = ""; // Xóa kết quả cũ
 
       if (data.length > 0) {
+        const table = document.createElement("table");
+        table.innerHTML = `
+          <thead>
+            <tr>
+              <th>Tên Phim</th>
+              <th>Ca Chiếu</th>
+              <th>Giờ Chiếu</th>
+              <th>Ngày Chiếu</th>
+              <th>Phòng Chiếu</th>
+              <th>Số Ghế</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        `;
+
+        const tbody = table.querySelector("tbody");
+
         data.forEach((item) => {
-          const itemDiv = document.createElement("div");
-          itemDiv.innerHTML = `
-            <p>Tên Phim: ${item.ten_phim}</p>
-            <p>Ca Chiếu: ${item.ca_chieu}</p>
-            <p>Ngày Chiếu: ${item.ngay_chieu}</p>
-            <p>Phòng Chiếu: ${item.phong_chieu}</p>
-            <p>Số Ghế: ${item.so_ghe}</p>
-            <hr>
+          const caChieuGio = {
+            Sáng: "9h00 - 11h00",
+            Chiều: "14h00 - 16h00",
+            Tối1: "18h00 - 20h00",
+            Tối2: "20h30 - 22h30",
+          };
+
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${item.ten_phim}</td>
+            <td>${item.ca_chieu}</td>
+            <td>${caChieuGio[item.ca_chieu]}</td>
+            <td>${item.ngay_chieu}</td>
+            <td>${item.phong_chieu}</td>
+            <td>${item.so_ghe}</td>
           `;
-          ketQuaDiv.appendChild(itemDiv);
+          tbody.appendChild(row);
         });
+
+        ketQuaDiv.appendChild(table);
       } else {
         ketQuaDiv.innerHTML = "<p>Không tìm thấy kết quả.</p>";
       }
