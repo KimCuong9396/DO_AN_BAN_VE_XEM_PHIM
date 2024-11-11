@@ -1,53 +1,43 @@
-// controllers/lapLichController.js
 const fs = require("fs");
 const path = require("path");
 
-const LICH_CHIEU_PATH = path.join(__dirname, "../du_lieu/lich_chieu.json");
-const PHIM_PATH = path.join(__dirname, "../du_lieu/phim.json");
+const phimFilePath = path.join(__dirname, "../du_lieu/phim.json");
+const lichChieuFilePath = path.join(__dirname, "../du_lieu/lich_chieu.json");
 
-// Hàm lấy danh sách lịch chiếu
-exports.layDanhSachLichChieu = (req, res) => {
-  try {
-    const data = fs.readFileSync(LICH_CHIEU_PATH, "utf-8");
-    const lichChieu = JSON.parse(data);
-    res.json(lichChieu);
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lấy danh sách lịch chiếu." });
-  }
-};
+// Đọc dữ liệu từ file JSON
+function getPhimList() {
+  return JSON.parse(fs.readFileSync(phimFilePath, "utf-8"));
+}
 
-// Hàm lấy danh sách phim
-exports.layDanhSachPhim = (req, res) => {
-  try {
-    const data = fs.readFileSync(PHIM_PATH, "utf-8");
-    const phim = JSON.parse(data);
-    res.json(phim);
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lấy danh sách phim." });
-  }
-};
+function getLichChieuList() {
+  return JSON.parse(fs.readFileSync(lichChieuFilePath, "utf-8"));
+}
 
-// Hàm tạo lịch chiếu mới
-exports.taoLichChieu = (req, res) => {
-  try {
-    const lichChieuData = JSON.parse(fs.readFileSync(LICH_CHIEU_PATH, "utf-8"));
-    const newLich = { id: Date.now().toString(), ...req.body };
-    lichChieuData.push(newLich);
-    fs.writeFileSync(LICH_CHIEU_PATH, JSON.stringify(lichChieuData, null, 2));
-    res.json(newLich);
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi lập lịch chiếu." });
-  }
-};
+// Tạo lịch chiếu mới và lưu vào file JSON
+function createLichChieu(scheduleData) {
+  const lichChieuList = getLichChieuList();
+  lichChieuList.push(scheduleData);
+  fs.writeFileSync(
+    lichChieuFilePath,
+    JSON.stringify(lichChieuList, null, 2),
+    "utf-8"
+  );
+}
 
-// Hàm xóa lịch chiếu
-exports.xoaLichChieu = (req, res) => {
-  try {
-    let lichChieuData = JSON.parse(fs.readFileSync(LICH_CHIEU_PATH, "utf-8"));
-    lichChieuData = lichChieuData.filter((item) => item.id !== req.params.id);
-    fs.writeFileSync(LICH_CHIEU_PATH, JSON.stringify(lichChieuData, null, 2));
-    res.json({ message: "Xóa lịch chiếu thành công" });
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi khi xóa lịch chiếu." });
-  }
+// Xóa lịch chiếu
+function deleteLichChieu(index) {
+  const lichChieuList = getLichChieuList();
+  lichChieuList.splice(index, 1);
+  fs.writeFileSync(
+    lichChieuFilePath,
+    JSON.stringify(lichChieuList, null, 2),
+    "utf-8"
+  );
+}
+
+module.exports = {
+  getPhimList,
+  getLichChieuList,
+  createLichChieu,
+  deleteLichChieu,
 };

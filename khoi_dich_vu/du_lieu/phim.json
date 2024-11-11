@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "ten_phim": "Phim 1",
+    "ma_so": "P001",
+    "thoi_luong": 120
+  },
+  {
+    "ten_phim": "Phim 2",
+    "ma_so": "P002",
+    "thoi_luong": 100
+  },
+  {
+    "ten_phim": "Phim 3",
+    "ma_so": "P003",
+    "thoi_luong": 150
+  }
+]

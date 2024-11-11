@@ -1,110 +1,96 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // Lấy danh sách phim từ file JSON
-  fetch("/api/phim")
+document.addEventListener("DOMContentLoaded", () => {
+  // Gọi API để lấy danh sách phim và hiển thị trong dropdown
+  fetch("http://localhost:5000/api/lapLich/getFilms")
     .then((response) => response.json())
-    .then((data) => {
-      const selectPhim = document.getElementById("ten_phim");
-      data.forEach((phim) => {
+    .then((films) => {
+      const filmSelect = document.getElementById("film");
+      filmSelect.innerHTML = "<option value=''>Chọn phim</option>"; // Xóa các lựa chọn cũ
+      films.forEach((film) => {
         const option = document.createElement("option");
-        option.value = phim.ten_phim;
-        option.textContent = phim.ten_phim;
-        selectPhim.appendChild(option);
+        option.value = film.ten_phim;
+        option.textContent = film.ten_phim;
+        filmSelect.appendChild(option);
       });
     })
     .catch((error) => console.error("Lỗi khi lấy danh sách phim:", error));
 
-  // Hiển thị lịch chiếu
-  hienThiLichChieu();
-});
+  // Lập lịch chiếu
+  document
+    .getElementById("scheduleForm")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
 
-function lapLichChieu() {
-  const tenPhim = document.getElementById("ten_phim").value;
-  const phongChieu = document.getElementById("phong_chieu").value;
-  const loaiPhong = document.getElementById("loai_phong").value;
-  const soGhe = document.querySelector(
-    `#loai_phong option[value="${loaiPhong}"]`
-  ).dataset.soGhe;
-  const caChieu = document.getElementById("ca_chieu").value;
-  const ngayChieu = document.getElementById("ngay_chieu").value;
+      const film = document.getElementById("film").value;
+      const phong_chieu = document.getElementById("phong_chieu").value;
+      const loai_phong = document.getElementById("loai_phong").value;
+      const so_ghe =
+        document.getElementById("loai_phong").selectedOptions[0].dataset.ghe;
+      const ca_chieu = document.getElementById("ca_chieu").value;
+      const ngay_chieu = document.getElementById("ngay_chieu").value;
 
-  const lichChieu = {
-    ten_phim: tenPhim,
-    phong_chieu: phongChieu,
-    loai_phong: loaiPhong,
-    so_ghe: parseInt(soGhe),
-    ca_chieu: caChieu,
-    ngay_chieu: ngayChieu,
+      const scheduleData = {
+        ten_phim: film,
+        phong_chieu,
+        loai_phong,
+        so_ghe,
+        ca_chieu,
+        ngay_chieu,
+      };
+
+      // Gửi dữ liệu tạo lịch chiếu
+      fetch("http://localhost:5000/api/lapLich/createSchedule", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(scheduleData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          alert(data.message);
+          loadSchedules(); // Reload lịch chiếu
+        })
+        .catch((error) => console.error("Error creating schedule:", error));
+    });
+
+  // Load lịch chiếu
+  function loadSchedules() {
+    fetch("http://localhost:5000/api/lapLich/getSchedules")
+      .then((response) => response.json())
+      .then((schedules) => {
+        const scheduleTable = document
+          .getElementById("scheduleTable")
+          .getElementsByTagName("tbody")[0];
+        scheduleTable.innerHTML = ""; // Clear previous table rows
+        schedules.forEach((schedule, index) => {
+          const row = scheduleTable.insertRow();
+          row.innerHTML = `
+            <td>${schedule.ten_phim}</td>
+            <td>${schedule.phong_chieu}</td>
+            <td>${schedule.loai_phong}</td>
+            <td>${schedule.ca_chieu}</td>
+            <td>${schedule.ngay_chieu}</td>
+            <td>${schedule.so_ghe}</td>
+            <td>
+              <button onclick="deleteSchedule(${index})">Xóa</button>
+              <button onclick="editSchedule(${index})">Sửa</button>
+            </td>
+          `;
+        });
+      });
+  }
+
+  loadSchedules();
+
+  // Xóa lịch chiếu
+  window.deleteSchedule = function (index) {
+    fetch("http://localhost:5000/api/lapLich/deleteSchedule", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ index }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        alert(data.message);
+        loadSchedules(); // Reload lịch chiếu sau khi xóa
+      });
   };
-
-  fetch("/api/lap_lich", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(lichChieu),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      alert("Lập lịch thành công!");
-      hienThiLichChieu(); // Cập nhật bảng sau khi lập lịch
-    })
-    .catch((error) => console.error("Lỗi khi lập lịch chiếu:", error));
-}
-
-function hienThiLichChieu() {
-  fetch("/api/lich_chieu")
-    .then((response) => response.json())
-    .then((data) => {
-      const ketQuaDiv = document.getElementById("ket_qua");
-      ketQuaDiv.innerHTML = `
-          <table>
-            <thead>
-              <tr>
-                <th>Tên Phim</th>
-                <th>Ca Chiếu</th>
-                <th>Phòng Chiếu</th>
-                <th>Loại Phòng</th>
-                <th>Số Ghế</th>
-                <th>Ngày Chiếu</th>
-                <th>Hành Động</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${data
-                .map(
-                  (item) => `
-                <tr>
-                  <td>${item.ten_phim}</td>
-                  <td>${item.ca_chieu}</td>
-                  <td>${item.phong_chieu}</td>
-                  <td>Loại ${item.loai_phong}</td>
-                  <td>${item.so_ghe}</td>
-                  <td>${item.ngay_chieu}</td>
-                  <td>
-                    <button onclick="xoaLichChieu('${item.id}')">Xóa</button>
-                    <button onclick="suaLichChieu('${item.id}')">Sửa</button>
-                  </td>
-                </tr>
-              `
-                )
-                .join("")}
-            </tbody>
-          </table>
-        `;
-    })
-    .catch((error) => console.error("Lỗi khi lấy lịch chiếu:", error));
-}
-
-function xoaLichChieu(id) {
-  fetch(`/api/lich_chieu/${id}`, { method: "DELETE" })
-    .then((response) => response.json())
-    .then(() => {
-      alert("Xóa lịch chiếu thành công!");
-      hienThiLichChieu();
-    })
-    .catch((error) => console.error("Lỗi khi xóa lịch chiếu:", error));
-}
-
-function suaLichChieu(id) {
-  // Xử lý logic sửa lịch chiếu
-}
+});

@@ -1,18 +1,31 @@
-// routes/lapLichRoutes.js
 const express = require("express");
 const router = express.Router();
 const lapLichController = require("../controllers/lapLichController");
 
-// Lấy danh sách lịch chiếu
-router.get("/lich_chieu", lapLichController.layDanhSachLichChieu);
+// API lấy danh sách phim
+router.get("/getFilms", (req, res) => {
+  const films = lapLichController.getPhimList();
+  res.json(films);
+});
 
-// Lấy danh sách phim
-router.get("/phim", lapLichController.layDanhSachPhim);
+// API lấy lịch chiếu
+router.get("/getSchedules", (req, res) => {
+  const schedules = lapLichController.getLichChieuList();
+  res.json(schedules);
+});
 
-// Tạo lịch chiếu mới
-router.post("/lap_lich", lapLichController.taoLichChieu);
+// API tạo lịch chiếu
+router.post("/createSchedule", (req, res) => {
+  const scheduleData = req.body;
+  lapLichController.createLichChieu(scheduleData);
+  res.json({ message: "Lập lịch thành công!" });
+});
 
-// Xóa lịch chiếu theo ID
-router.delete("/lich_chieu/:id", lapLichController.xoaLichChieu);
+// API xóa lịch chiếu
+router.delete("/deleteSchedule", (req, res) => {
+  const { index } = req.body;
+  lapLichController.deleteLichChieu(index);
+  res.json({ message: "Xóa lịch chiếu thành công!" });
+});
 
 module.exports = router;

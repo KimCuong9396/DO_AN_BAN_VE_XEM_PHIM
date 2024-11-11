@@ -2,21 +2,19 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lập Lịch Chiếu Phim</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <h1>Lập Lịch Chiếu Phim</h1>
-
-    <form id="formLapLich">
-      <label for="ten_phim">Tên Phim:</label>
-      <select id="ten_phim" name="ten_phim">
-        <!-- Dữ liệu phim sẽ được tải từ file JSON -->
+    <form id="scheduleForm">
+      <label for="film">Tên Phim:</label>
+      <select id="film" name="film">
+        <option value="">Chọn phim</option>
       </select>
 
       <label for="phong_chieu">Phòng Chiếu:</label>
-      <select id="phong_chieu" name="phong_chieu">
+      <select id="phong_chieu">
         <option value="1">Phòng 1</option>
         <option value="2">Phòng 2</option>
         <option value="3">Phòng 3</option>
@@ -27,28 +25,41 @@
 
       <label for="loai_phong">Loại Phòng:</label>
       <select id="loai_phong" name="loai_phong">
-        <option value="1" data-so-ghe="100">Loại 1 (100 ghế)</option>
-        <option value="2" data-so-ghe="60">Loại 2 (60 ghế)</option>
+        <option value="1" data-ghe="100">Loại 1 (100 ghế)</option>
+        <option value="2" data-ghe="60">Loại 2 (60 ghế)</option>
       </select>
 
       <label for="ca_chieu">Ca Chiếu:</label>
-      <select id="ca_chieu" name="ca_chieu">
-        <option value="Sáng">Sáng (9h00-11h00)</option>
-        <option value="Chiều">Chiều (14h00-16h00)</option>
-        <option value="Tối 1">Tối (18h00-20h00)</option>
-        <option value="Tối 2">Tối (20h30-22h30)</option>
+      <select id="ca_chieu">
+        <option value="Sáng: 9h00-11h00">Sáng: 9h00-11h00</option>
+        <option value="Chiều: 14h00-16h00">Chiều: 14h00-16h00</option>
+        <option value="Tối: 18h00-20h00">Tối: 18h00-20h00</option>
+        <option value="Tối: 20h30-22h30">Tối: 20h30-22h30</option>
       </select>
 
       <label for="ngay_chieu">Ngày Chiếu:</label>
-      <input type="date" id="ngay_chieu" name="ngay_chieu" required />
+      <input type="date" id="ngay_chieu" name="ngay_chieu" />
 
-      <button type="button" onclick="lapLichChieu()">Lập Lịch</button>
+      <button type="submit">Lập Lịch</button>
     </form>
 
     <h2>Lịch Chiếu</h2>
-    <div id="ket_qua">
-      <!-- Bảng kết quả lịch chiếu -->
-    </div>
+    <table id="scheduleTable">
+      <thead>
+        <tr>
+          <th>Tên Phim</th>
+          <th>Phòng Chiếu</th>
+          <th>Loại Phòng</th>
+          <th>Ca Chiếu</th>
+          <th>Ngày Chiếu</th>
+          <th>Số Ghế</th>
+          <th>Thao Tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Lịch chiếu sẽ được hiển thị ở đây -->
+      </tbody>
+    </table>
 
     <script src="js/lap_lich.js"></script>
   </body>
