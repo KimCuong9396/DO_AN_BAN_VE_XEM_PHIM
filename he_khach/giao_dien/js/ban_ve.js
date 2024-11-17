@@ -1,97 +1,111 @@
-document.getElementById("timKiemForm").addEventListener("submit", function (e) {
-  e.preventDefault(); // Ngừng hành động mặc định của form
+// Hàm tra cứu lịch chiếu
+function traCuu() {
+  const tenPhim = document.getElementById("ten_phim").value;
+  const caChieu = document.getElementById("ca_chieu").value;
+  const ngayChieu = document.getElementById("ngay_chieu").value;
 
-  const tenPhim = document.getElementById("tenPhim").value;
+  const query = `ten_phim=${tenPhim}&ca_chieu=${caChieu}&ngay_chieu=${ngayChieu}`;
+  const url = `http://localhost:5000/api/lich-chieu?${query}`;
 
-  if (!tenPhim.trim()) {
-    alert("Tên phim không được để trống");
-    return;
-  }
-
-  // Gửi yêu cầu tìm kiếm lịch chiếu
-  fetch(`/api/tim-kiem?tenPhim=${encodeURIComponent(tenPhim)}`)
+  fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      const ketQuaDiv = document.getElementById("ketQuaTimKiem");
-      ketQuaDiv.innerHTML = ""; // Xóa kết quả trước đó
+      const ketQuaDiv = document.getElementById("ket_qua");
+      ketQuaDiv.innerHTML = ""; // Xóa kết quả cũ
 
-      if (data.status === "found") {
-        ketQuaDiv.innerHTML = `<h3>Kết quả tìm kiếm:</h3>`;
-        data.lichChieu.forEach((lich, index) => {
-          ketQuaDiv.innerHTML += `
-                      <p><strong>Phim:</strong> ${lich.ten_phim}</p>
-                      <p><strong>Phòng chiếu:</strong> ${lich.phong_chieu}</p>
-                      <p><strong>Loại phòng:</strong> ${lich.loai_phong}</p>
-                      <p><strong>Số ghế còn lại:</strong> ${lich.so_ghe}</p>
-                      <p><strong>Ca chiếu:</strong> ${lich.ca_chieu}</p>
-                      <p><strong>Ngày chiếu:</strong> ${lich.ngay_chieu}</p>
-                      <button class="banVeBtn" data-phim="${lich.ten_phim}" data-phong="${lich.phong_chieu}" data-ngay="${lich.ngay_chieu}" data-soGhe="${lich.so_ghe}">Bán vé</button>
-                      <hr>
+      if (data.length > 0) {
+        const table = document.createElement("table");
+        table.innerHTML = `
+                  <thead>
+                      <tr>
+                          <th>Tên Phim</th>
+                          <th>Ca Chiếu</th>
+                          <th>Giờ Chiếu</th>
+                          <th>Ngày Chiếu</th>
+                          <th>Phòng Chiếu</th>
+                          <th>Số Ghế</th>
+                          <th>Chọn</th>
+                      </tr>
+                  </thead>
+                  <tbody></tbody>
+              `;
+        const tbody = table.querySelector("tbody");
+
+        data.forEach((item) => {
+          const caChieuGio = {
+            Sáng: "9h00 - 11h00",
+            Chiều: "14h00 - 16h00",
+            Tối1: "18h00 - 20h00",
+            Tối2: "20h30 - 22h30",
+          };
+
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                      <td>${item.ten_phim}</td>
+                      <td>${item.ca_chieu}</td>
+                      <td>${caChieuGio[item.ca_chieu]}</td>
+                      <td>${item.ngay_chieu}</td>
+                      <td>${item.phong_chieu}</td>
+                      <td>${item.so_ghe}</td>
+                      <td><button onclick="chonVe(${item.id}, ${
+            item.so_ghe
+          })">Chọn Ghế</button></td>
                   `;
+          tbody.appendChild(row);
         });
 
-        // Gắn sự kiện cho các nút bán vé
-        const banVeBtns = document.querySelectorAll(".banVeBtn");
-        banVeBtns.forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const tenPhim = btn.getAttribute("data-phim");
-            const phongChieu = btn.getAttribute("data-phong");
-            const ngayChieu = btn.getAttribute("data-ngay");
-            const soGheConLai = parseInt(btn.getAttribute("data-soGhe"));
-
-            // Hiển thị form bán vé
-            const formDiv = document.getElementById("formBanVe");
-            formDiv.innerHTML = `
-                          <h3>Bán vé cho phim: ${tenPhim}</h3>
-                          <label for="soLuongVe">Số lượng vé:</label>
-                          <input type="number" id="soLuongVe" min="1" max="${soGheConLai}" required>
-                          <button id="xacNhanBanVe">Xác nhận bán vé</button>
-                      `;
-
-            document
-              .getElementById("xacNhanBanVe")
-              .addEventListener("click", function () {
-                const soLuongVe = parseInt(
-                  document.getElementById("soLuongVe").value
-                );
-
-                if (soLuongVe > soGheConLai) {
-                  alert("Số lượng vé yêu cầu vượt quá số ghế còn lại");
-                } else {
-                  // Gửi yêu cầu bán vé
-                  fetch("/api/ban-ve", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      tenPhim,
-                      phongChieu,
-                      soGhe: soGheConLai,
-                      soLuongVe,
-                      ngayChieu,
-                    }),
-                  })
-                    .then((response) => response.json())
-                    .then((data) => {
-                      if (data.status === "success") {
-                        alert("Vé bán thành công");
-                        formDiv.innerHTML = `<p>Vé bán thành công! Số ghế còn lại: ${data.soGheConLai}</p>`;
-                      } else {
-                        alert("Lỗi khi bán vé");
-                      }
-                    })
-                    .catch((err) => console.error("Lỗi:", err));
-                }
-              });
-          });
-        });
+        ketQuaDiv.appendChild(table);
       } else {
-        ketQuaDiv.innerHTML = `<p class="alert">${data.message}</p>`;
+        ketQuaDiv.innerHTML = "<p>Không tìm thấy kết quả.</p>";
       }
     })
-    .catch((err) => {
-      console.error("Lỗi:", err);
-      alert("Đã xảy ra lỗi khi tìm kiếm.");
+    .catch((error) => {
+      console.error("Lỗi khi tra cứu:", error);
+      document.getElementById("ket_qua").innerHTML =
+        "<p>Đã xảy ra lỗi. Vui lòng thử lại sau.</p>";
     });
-});
+}
+
+// Hàm chọn vé và hiển thị sơ đồ ghế
+function chonVe(id, soGhe) {
+  const soDoGheDiv = document.getElementById("so_do_ghe");
+  soDoGheDiv.innerHTML = ""; // Xóa sơ đồ ghế cũ
+
+  // Tạo sơ đồ ghế
+  for (let i = 1; i <= soGhe; i++) {
+    const button = document.createElement("button");
+    button.innerText = `Ghế ${i}`;
+    button.onclick = () => chonGhese(id, i);
+    soDoGheDiv.appendChild(button);
+  }
+
+  // Hiển thị form đặt vé
+  document.getElementById("form_dat_ve").style.display = "block";
+}
+
+// Hàm chọn ghế
+function chonGhese(id, ghe) {
+  // Lưu ghế đã chọn vào một biến toàn cục hoặc trong session để gửi khi bán vé
+  console.log(`Chọn ghế ${ghe} cho lịch chiếu ${id}`);
+}
+
+// Xác nhận bán vé
+function xacNhanBanVe() {
+  const seats = [1, 2, 3]; // Danh sách ghế đã chọn, ví dụ ghế 1, 2, 3 (cần lấy từ giao diện người dùng)
+  const idLichChieu = 1; // ID của lịch chiếu đang chọn (lấy từ khi chọn ghế)
+
+  fetch(`http://localhost:5000/api/ban-ve/${idLichChieu}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ seats: seats }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert(data.message); // Thông báo bán vé thành công
+    })
+    .catch((error) => {
+      console.error("Lỗi khi bán vé:", error);
+    });
+}

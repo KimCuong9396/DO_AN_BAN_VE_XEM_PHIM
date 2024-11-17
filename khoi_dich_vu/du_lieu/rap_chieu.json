@@ -1,5 +1,17 @@
 [
-  { "ten": "Rạp 1", "dia_chi": "123 Đường A", "so_ghe": 100 },
-  { "ten": "Rạp 2", "dia_chi": "456 Đường B", "so_ghe": 60 },
-  { "ten": "Rạp 3", "dia_chi": "789 Đường C", "so_ghe": 100 }
+  {
+    "ma_rap": "RP001",
+    "ten_rap": "Rạp 1",
+    "dia_chi": "Đường ABC, Quận 1, TP.HCM"
+  },
+  {
+    "ma_rap": "RP002",
+    "ten_rap": "Rạp 2",
+    "dia_chi": "Đường XYZ, Quận 3, TP.HCM"
+  },
+  {
+    "ma_rap": "RP003",
+    "ten_rap": "Rạp 3",
+    "dia_chi": "Đường DEF, Quận 5, TP.HCM"
+  }
 ]

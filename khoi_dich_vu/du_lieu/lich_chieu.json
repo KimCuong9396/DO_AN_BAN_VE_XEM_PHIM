@@ -14,5 +14,13 @@
     "so_ghe": "60",
     "ca_chieu": "Tối: 18h00-20h00",
     "ngay_chieu": "2024-11-18"
+  },
+  {
+    "ten_phim": "Phim 3",
+    "phong_chieu": "4",
+    "loai_phong": "1",
+    "so_ghe": "100",
+    "ca_chieu": "Tối: 20h30-22h30",
+    "ngay_chieu": "2024-11-26"
   }
 ]

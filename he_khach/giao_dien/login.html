@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <title>Đăng Nhập</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- Thêm liên kết tới CSS -->
   </head>
   <body>
-    <h2>Đăng Nhập</h2>
-    <input type="text" id="username" placeholder="Tên đăng nhập" />
-    <input type="password" id="password" placeholder="Mật khẩu" />
-    <button onclick="login()">Đăng nhập</button>
+    <form>
+      <h2>Đăng Nhập</h2>
+      <input type="text" id="username" placeholder="Tên đăng nhập" />
+      <input type="password" id="password" placeholder="Mật khẩu" />
+      <button type="button" onclick="login()">Đăng nhập</button>
+    </form>
     <script src="./js/login.js"></script>
   </body>
 </html>

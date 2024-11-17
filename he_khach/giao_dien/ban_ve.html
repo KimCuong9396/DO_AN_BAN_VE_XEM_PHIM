@@ -3,19 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bán vé xem phim</title>
+    <title>Bán Vé Xem Phim</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>Tìm kiếm lịch chiếu</h1>
-    <form id="timKiemForm">
-      <label for="tenPhim">Tên phim:</label>
-      <input type="text" id="tenPhim" name="tenPhim" required />
-      <button type="submit">Tìm kiếm</button>
-    </form>
-    <div id="ketQuaTimKiem"></div>
-    <div id="formBanVe"></div>
+    <h1>Bán Vé Xem Phim</h1>
 
-    <script src="ban_ve.js"></script>
+    <!-- Form tra cứu lịch chiếu -->
+    <div>
+      <h3>Tra Cứu Lịch Chiếu</h3>
+      <form id="form_tra_cuu">
+        <label for="ten_phim">Tên Phim:</label>
+        <input type="text" id="ten_phim" name="ten_phim" />
+        <br /><br />
+
+        <label for="ca_chieu">Ca Chiếu:</label>
+        <select id="ca_chieu" name="ca_chieu">
+          <option value="">Chọn ca chiếu</option>
+          <option value="Sáng">Sáng (9h00 - 11h00)</option>
+          <option value="Chiều">Chiều (14h00 - 16h00)</option>
+          <option value="Tối1">Tối 1 (18h00 - 20h00)</option>
+          <option value="Tối2">Tối 2 (20h30 - 22h30)</option>
+        </select>
+        <br /><br />
+
+        <label for="ngay_chieu">Ngày Chiếu:</label>
+        <input type="date" id="ngay_chieu" name="ngay_chieu" />
+        <br /><br />
+
+        <button type="button" onclick="traCuu()">Tìm Kiếm</button>
+      </form>
+    </div>
+
+    <!-- Kết quả tra cứu -->
+    <div id="ket_qua"></div>
+
+    <!-- Form đặt vé -->
+    <div id="form_dat_ve" style="display: none">
+      <h3>Chọn Ghế Đặt Vé</h3>
+      <div id="so_do_ghe"></div>
+      <button id="btn_xac_nhan" onclick="xacNhanBanVe()">
+        Xác Nhận Đặt Vé
+      </button>
+    </div>
+
+    <script src="./js/ban_ve.js"></script>
   </body>
 </html>

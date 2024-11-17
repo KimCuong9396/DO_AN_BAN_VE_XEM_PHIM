@@ -94,3 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 });
+
+function ComeBack() {
+  // Quay về trang đăng nhập
+  window.location.href = "quan_ly.html";
+}

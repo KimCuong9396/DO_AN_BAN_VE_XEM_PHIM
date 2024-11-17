@@ -122,7 +122,7 @@ table tbody tr:hover {
 
 /* Định dạng thông báo không có kết quả */
 #ket_qua p {
-  color: #888;
+  color: #9db0bc;
   text-align: center;
   font-style: italic;
   margin: 20px;
@@ -278,4 +278,300 @@ button:hover {
 .success {
   color: #28a745;
   font-weight: bold;
+}
+
+/*----------------------------------------------------*/
+/* CSS cho login */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Đặt nền và kiểu chữ cho toàn bộ trang */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+/* Định dạng cho hộp đăng nhập */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Hiệu ứng hover cho nút đăng nhập */
+button:hover {
+  background-color: #45a049;
+}
+
+/* Đảm bảo các phần tử trong form không vượt quá chiều rộng */
+form {
+  width: 100%;
+  max-width: 400px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* CSS cho nhan vien */
+/* Reset lại margin và padding cho tất cả các phần tử */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Đặt nền và kiểu chữ cho toàn bộ trang */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e9f4fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* Tiêu đề chính */
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+/* Định dạng cho nút đăng xuất */
+button {
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+button:hover {
+  background-color: #e63946;
+}
+
+/* Danh sách các liên kết */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 15px 0;
+}
+
+a {
+  font-size: 18px;
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #0056b3;
+}
+/*--------------------------------CSS Quan ly--------------------------------------*/
+/* Reset lại margin và padding cho tất cả các phần tử */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Đặt nền và kiểu chữ cho toàn bộ trang */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f7fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* Tiêu đề chính */
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+/* Định dạng cho nút đăng xuất */
+button {
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+button:hover {
+  background-color: #e63946;
+}
+
+/* Danh sách các liên kết */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 15px 0;
+}
+
+a {
+  font-size: 18px;
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #0056b3;
+}
+/*------------------------------------------Lap lich chieu-----------------------*/
+/* Reset lại margin và padding cho tất cả các phần tử */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Đặt nền và kiểu chữ cho toàn bộ trang */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Tiêu đề chính */
+h1 {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+}
+
+/* Form Lập Lịch */
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  text-align: left;
+}
+
+select,
+input[type="date"],
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Table lịch chiếu */
+h2 {
+  color: #333;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #e53935;
 }
