@@ -9,10 +9,25 @@ function login() {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.role === "nhanvien") {
-        window.location.href = "nhan_vien.html";
-      } else if (data.role === "quanly") {
-        window.location.href = "quan_ly.html";
+      if (data.role) {
+        // Lưu thông tin tài khoản đăng nhập vào localStorage
+        localStorage.setItem("account", data.role);
+
+        if (data.role === "nhanvien1") {
+          window.location.href = "nhan_vien1.html";
+        } else if (data.role === "nhanvien2") {
+          window.location.href = "nhan_vien2.html";
+        } else if (data.role === "nhanvien3") {
+          window.location.href = "nhan_vien3.html";
+        } else if (data.role === "nhanvien4") {
+          window.location.href = "nhan_vien4.html";
+        } else if (data.role === "quanly1") {
+          window.location.href = "quan_ly1.html";
+        } else if (data.role === "quanly2") {
+          window.location.href = "quan_ly2.html";
+        } else {
+          alert("Sai tên đăng nhập hoặc mật khẩu");
+        }
       } else {
         alert("Sai tên đăng nhập hoặc mật khẩu");
       }

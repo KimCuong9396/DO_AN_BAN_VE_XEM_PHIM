@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Thống Kê Vé Bán</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <h2>Thống Kê Vé Bán</h2>
+    <form id="formThongKe">
+      <label for="thang">Tháng:</label>
+      <input type="number" id="thang" name="thang" min="1" max="12" required />
+      <label for="nam">Năm:</label>
+      <input type="number" id="nam" name="nam" required />
+      <button type="submit">Thống kê</button>
+    </form>
+
+    <div id="ketQuaThongKe">
+      <!-- Kết quả thống kê sẽ hiển thị ở đây -->
+    </div>
+
+    <script>
+      $("#formThongKe").submit(function (event) {
+        event.preventDefault();
+
+        const thang = $("#thang").val();
+        const nam = $("#nam").val();
+
+        $.ajax({
+          url: "/thong-ke-ve-ban", // URL API bạn tạo trên server
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ thang, nam }),
+          success: function (data) {
+            let resultHtml = `<h3>Tháng ${data.thang} Năm ${data.nam}</h3>`;
+            resultHtml += `<p>Tổng số vé: ${data.tong_so_ve}</p>`;
+            resultHtml += `<table border="1"><thead><tr><th>Tên Phim</th><th>Ca Chiếu</th><th>Số Vé Bán</th><th>Số Vé</th><th>Tỷ Lệ</th></tr></thead><tbody>`;
+
+            data.chi_tiet.forEach((item) => {
+              resultHtml += `<tr>
+              <td>${item.ten_phim}</td>
+              <td>${item.ca_chieu}</td>
+              <td>${item.so_ve_ban}</td>
+              <td>${item.so_ve}</td>
+              <td>${item.ty_le.toFixed(2)}%</td>
+            </tr>`;
+            });
+
+            resultHtml += `</tbody></table>`;
+            $("#ketQuaThongKe").html(resultHtml);
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,47 +1,61 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
-}
-
-h2 {
+  font-family: Arial, sans-serif;
+  background-image: url("../images/background.jpg"); /* Đường dẫn đến hình ảnh */
+  background-size: cover; /* Phủ đầy toàn bộ màn hình mà không bị méo */
+  background-position: center center; /* Canh giữa hình ảnh */
+  background-repeat: no-repeat; /* Không lặp lại hình ảnh */
+  height: 100vh; /* Đảm bảo chiều cao của body là toàn bộ chiều cao của màn hình */
+  color: #fff;
   text-align: center;
-  color: #333;
 }
 
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 10px;
+h1 {
+  margin-top: 50px;
+  font-size: 50px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
   margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+}
+
+a {
+  text-decoration: none;
+  color: #00f;
+  font-size: 20px;
 }
 
 button {
-  width: 100%;
-  padding: 10px;
-  background-color: #5cb85c;
-  color: white;
+  background-color: rgb(17, 88, 212);
+  color: #fff;
   border: none;
-  border-radius: 4px;
+  padding: 5px 10px;
+  margin-top: 20px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
+  border-radius: 3px;
 }
 
 button:hover {
-  background-color: #4cae4c;
+  background-color: rgb(114, 163, 183);
+}
+input {
+  width: 20%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+}
+
+input:focus {
+  border-color: #4caf50; /* Khi focus vào ô nhập, viền đổi màu */
+  outline: none;
 }

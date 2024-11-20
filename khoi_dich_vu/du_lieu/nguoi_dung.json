@@ -1,12 +1,32 @@
 [
   {
-    "username": "nhanvien",
-    "password": "123456",
-    "role": "nhanvien"
+    "username": "nhanvien1",
+    "password": "123",
+    "role": "nhanvien1"
   },
   {
-    "username": "quanly",
-    "password": "abcdef",
-    "role": "quanly"
+    "username": "nhanvien2",
+    "password": "123",
+    "role": "nhanvien2"
+  },
+  {
+    "username": "nhanvien3",
+    "password": "123",
+    "role": "nhanvien3"
+  },
+  {
+    "username": "nhanvien4",
+    "password": "123",
+    "role": "nhanvien4"
+  },
+  {
+    "username": "quanly1",
+    "password": "123",
+    "role": "quanly1"
+  },
+  {
+    "username": "quanly2",
+    "password": "123",
+    "role": "quanly2"
   }
 ]

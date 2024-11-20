@@ -13,5 +13,15 @@
     "ma_rap": "RP003",
     "ten_rap": "Rạp 3",
     "dia_chi": "Đường DEF, Quận 5, TP.HCM"
+  },
+  {
+    "ma_rap": "RP004",
+    "ten_rap": "Rạp 4",
+    "dia_chi": "Đường GHI, Quận 7, TP.HCM"
+  },
+  {
+    "ma_rap": "RP005",
+    "ten_rap": "Rạp 5",
+    "dia_chi": "Đường OPQ, Quận 11, TP.HCM"
   }
 ]

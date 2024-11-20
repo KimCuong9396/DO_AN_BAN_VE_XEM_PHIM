@@ -1,4 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const userAccount = localStorage.getItem("account");
+  const rapSelect = document.getElementById("rap_chieu");
+
+  // Thêm các tùy chọn rạp chiếu dựa trên username
+  if (userAccount === "quanly1") {
+    rapSelect.innerHTML = `
+      <option value="Rạp 1">Rạp 1</option>
+      <option value="Rạp 2">Rạp 2</option>
+      <option value="Rạp 3">Rạp 3</option>
+    `;
+  } else if (userAccount === "quanly2") {
+    rapSelect.innerHTML = `
+      <option value="Rạp 4">Rạp 4</option>
+      <option value="Rạp 5">Rạp 5</option>
+    `;
+  }
+
   // Gọi API để lấy danh sách phim và hiển thị trong dropdown
   fetch("http://localhost:5000/api/lapLich/getFilms")
     .then((response) => response.json())
@@ -20,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("submit", (event) => {
       event.preventDefault();
 
+      const rap_chieu = document.getElementById("rap_chieu").value;
       const film = document.getElementById("film").value;
       const phong_chieu = document.getElementById("phong_chieu").value;
       const loai_phong = document.getElementById("loai_phong").value;
@@ -28,7 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const ca_chieu = document.getElementById("ca_chieu").value;
       const ngay_chieu = document.getElementById("ngay_chieu").value;
 
+      if (!rap_chieu) {
+        alert("Vui lòng chọn rạp chiếu!");
+        return;
+      }
+
       const scheduleData = {
+        rap_chieu,
         ten_phim: film,
         phong_chieu,
         loai_phong,
@@ -63,16 +87,13 @@ document.addEventListener("DOMContentLoaded", () => {
         schedules.forEach((schedule, index) => {
           const row = scheduleTable.insertRow();
           row.innerHTML = `
+            <td>${schedule.rap_chieu}</td>
             <td>${schedule.ten_phim}</td>
             <td>${schedule.phong_chieu}</td>
             <td>${schedule.loai_phong}</td>
             <td>${schedule.ca_chieu}</td>
             <td>${schedule.ngay_chieu}</td>
             <td>${schedule.so_ghe}</td>
-            <td>
-              <button onclick="deleteSchedule(${index})">Xóa</button>
-              <button onclick="editSchedule(${index})">Sửa</button>
-            </td>
           `;
         });
       });
@@ -96,6 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function ComeBack() {
-  // Quay về trang đăng nhập
-  window.location.href = "quan_ly.html";
+  const userAccount = localStorage.getItem("account");
+
+  if (userAccount === "quanly1") {
+    window.location.href = "quan_ly1.html";
+  } else window.location.href = "quan_ly2.html";
 }

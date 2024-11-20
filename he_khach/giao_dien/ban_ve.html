@@ -3,50 +3,160 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bán Vé Xem Phim</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Bán Vé</title>
+    <link rel="stylesheet" href="./css/banve.css" />
+    <style>
+      .seat {
+        width: 30px;
+        height: 30px;
+        margin: 3px;
+        background-color: #4caf50;
+        border: 1px solid #ddd;
+        display: inline-block;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+      }
+      .selected {
+        background-color: #f44336;
+      }
+      .unavailable {
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+      .seat-row {
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
   <body>
-    <h1>Bán Vé Xem Phim</h1>
+    <h1>Bán Vé</h1>
+    <div id="thong_tin_lich_chieu"></div>
+    <button id="btnChonGhe">Chọn ghế</button>
+    <div id="so_do_ghe" style="display: none"></div>
+    <p id="so_luong_ghe"></p>
+    <button id="btnXacNhan" style="display: none">Xác nhận bán vé</button>
+    <div id="thong_tin_ve_ban"></div>
 
-    <!-- Form tra cứu lịch chiếu -->
-    <div>
-      <h3>Tra Cứu Lịch Chiếu</h3>
-      <form id="form_tra_cuu">
-        <label for="ten_phim">Tên Phim:</label>
-        <input type="text" id="ten_phim" name="ten_phim" />
-        <br /><br />
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const lichChieuDaChon = JSON.parse(
+          localStorage.getItem("lichChieuDaChon") || "{}"
+        );
+        const userAccount = localStorage.getItem("account") || "Chưa đăng nhập";
 
-        <label for="ca_chieu">Ca Chiếu:</label>
-        <select id="ca_chieu" name="ca_chieu">
-          <option value="">Chọn ca chiếu</option>
-          <option value="Sáng">Sáng (9h00 - 11h00)</option>
-          <option value="Chiều">Chiều (14h00 - 16h00)</option>
-          <option value="Tối1">Tối 1 (18h00 - 20h00)</option>
-          <option value="Tối2">Tối 2 (20h30 - 22h30)</option>
-        </select>
-        <br /><br />
+        if (lichChieuDaChon) {
+          document.getElementById("thong_tin_lich_chieu").innerHTML = `
+          <p><strong>Tên Phim:</strong> ${lichChieuDaChon.ten_phim}</p>
+          <p><strong>Ca Chiếu:</strong> ${lichChieuDaChon.ca_chieu}</p>
+          <p><strong>Ngày Chiếu:</strong> ${lichChieuDaChon.ngay_chieu}</p>
+          <p><strong>Phòng Chiếu:</strong> ${lichChieuDaChon.phong_chieu}</p>
+          <p><strong>Số Ghế:</strong> ${lichChieuDaChon.so_ghe}</p>
+        `;
 
-        <label for="ngay_chieu">Ngày Chiếu:</label>
-        <input type="date" id="ngay_chieu" name="ngay_chieu" />
-        <br /><br />
+          document
+            .getElementById("btnChonGhe")
+            .addEventListener("click", () => {
+              const soDoGheDiv = document.getElementById("so_do_ghe");
+              soDoGheDiv.innerHTML = "";
+              soDoGheDiv.style.display = "block";
 
-        <button type="button" onclick="traCuu()">Tìm Kiếm</button>
-      </form>
-    </div>
+              const soGhe = parseInt(lichChieuDaChon.so_ghe, 10);
+              const soHang = soGhe === 100 ? 10 : 6;
+              const soGheMoiHang = soGhe / soHang;
 
-    <!-- Kết quả tra cứu -->
-    <div id="ket_qua"></div>
+              let gheDaChon = [];
+              let gheKhongChon = lichChieuDaChon.ghe_khong_chon || [];
 
-    <!-- Form đặt vé -->
-    <div id="form_dat_ve" style="display: none">
-      <h3>Chọn Ghế Đặt Vé</h3>
-      <div id="so_do_ghe"></div>
-      <button id="btn_xac_nhan" onclick="xacNhanBanVe()">
-        Xác Nhận Đặt Vé
-      </button>
-    </div>
+              for (let i = 0; i < soHang; i++) {
+                const row = document.createElement("div");
+                row.classList.add("seat-row");
+                for (let j = 0; j < soGheMoiHang; j++) {
+                  const seatNumber = i * soGheMoiHang + j + 1;
+                  const seat = document.createElement("div");
+                  seat.classList.add("seat");
+                  seat.textContent = seatNumber;
 
-    <script src="./js/ban_ve.js"></script>
+                  if (gheKhongChon.includes(seatNumber)) {
+                    seat.classList.add("unavailable");
+                  } else {
+                    seat.onclick = () => {
+                      if (!seat.classList.contains("unavailable")) {
+                        seat.classList.toggle("selected");
+                        if (seat.classList.contains("selected")) {
+                          gheDaChon.push(seatNumber);
+                        } else {
+                          gheDaChon = gheDaChon.filter((g) => g !== seatNumber);
+                        }
+                        document.getElementById(
+                          "so_luong_ghe"
+                        ).textContent = `Đã chọn: ${gheDaChon.join(
+                          ", "
+                        )} (Tổng số ghế: ${gheDaChon.length})`;
+                        document.getElementById("btnXacNhan").style.display =
+                          gheDaChon.length > 0 ? "block" : "none";
+                      }
+                    };
+                  }
+                  row.appendChild(seat);
+                }
+                soDoGheDiv.appendChild(row);
+              }
+            });
+
+          document
+            .getElementById("btnXacNhan")
+            .addEventListener("click", () => {
+              const ngayBan = new Date().toLocaleDateString("vi-VN");
+              const veBan = {
+                ten_phim: lichChieuDaChon.ten_phim,
+                ca_chieu: lichChieuDaChon.ca_chieu,
+                ngay_chieu: lichChieuDaChon.ngay_chieu,
+                phong_chieu: lichChieuDaChon.phong_chieu,
+                ghe_da_chon: gheDaChon,
+                so_luong_ghe: gheDaChon.length,
+                username: userAccount,
+                ngay_ban: ngayBan,
+              };
+
+              document.getElementById("thong_tin_ve_ban").innerHTML = `
+            <h2>Thông tin vé bán</h2>
+            <p><strong>Tên Phim:</strong> ${veBan.ten_phim}</p>
+            <p><strong>Ca Chiếu:</strong> ${veBan.ca_chieu}</p>
+            <p><strong>Ngày Chiếu:</strong> ${veBan.ngay_chieu}</p>
+            <p><strong>Phòng Chiếu:</strong> ${veBan.phong_chieu}</p>
+            <p><strong>Vị trí ghế:</strong> ${veBan.ghe_da_chon.join(", ")}</p>
+            <p><strong>Số lượng ghế:</strong> ${veBan.so_luong_ghe}</p>
+            <p><strong>Người bán:</strong> ${veBan.username}</p>
+            <p><strong>Ngày bán:</strong> ${veBan.ngay_ban}</p>
+          `;
+
+              // Lưu dữ liệu vào JSON (giả lập bằng fetch API)
+              fetch("/api/ban_ve", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(veBan),
+              })
+                .then(() => {
+                  alert("Đã lưu thông tin vé bán và cập nhật số ghế trống.");
+                  // Cập nhật số ghế còn trống và danh sách ghế không chọn
+                  lichChieuDaChon.ghe_khong_chon = (
+                    lichChieuDaChon.ghe_khong_chon || []
+                  ).concat(gheDaChon);
+                  lichChieuDaChon.so_ghe -= gheDaChon.length;
+                  localStorage.setItem(
+                    "lichChieuDaChon",
+                    JSON.stringify(lichChieuDaChon)
+                  );
+                })
+                .catch((error) => {
+                  console.error("Lỗi khi lưu thông tin:", error);
+                });
+            });
+        }
+      });
+    </script>
   </body>
 </html>

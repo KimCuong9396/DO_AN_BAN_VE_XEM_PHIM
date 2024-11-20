@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-image: url("../images/backgroundQL1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  color: white;
+  text-align: center;
+  position: relative; /* Để chứa các phần tử có position tuyệt đối */
+}
+
+h1 {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  font-size: 24px;
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 10px 0;
+}
+
+a {
+  text-decoration: none;
+  color: #00f;
+  font-size: 30px;
+}
+
+button {
+  background-color: #f00;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #c00;
+}
+
+button.logout {
+  position: absolute;
+  top: 1px;
+  right: 20px;
+  font-size: 14px;
+  padding: 8px 16px;
+  background-color: rgb(10, 79, 217);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.logout:hover {
+  background-color: #c00;
+}

@@ -1,0 +1,118 @@
+body {
+  background-image: url("../images/background.jpg"); /* Thêm hình nền */
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f4;
+  margin: 20px;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  color: #f7f0f0;
+  margin-bottom: 30px;
+}
+
+div {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 10px;
+  margin-left: 200px;
+  margin-right: 200px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #444;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+  width: 40%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 15px;
+  display: block;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#form_dat_ve {
+  display: none;
+}
+
+#so_do_ghe {
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+}
+
+#so_do_ghe div {
+  background-color: #ddd;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#so_do_ghe div:hover {
+  background-color: #cfcfcf;
+}
+
+#so_do_ghe .selected {
+  background-color: #28a745;
+  color: #fff;
+}
+
+#btn_xac_nhan {
+  background-color: #28a745;
+}
+
+#btn_xac_nhan:hover {
+  background-color: #218838;
+}
+button[onclick="ComeBack()"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  margin-left: 1000px;
+  margin-right: 10px;
+  transition: background-color 0.3s;
+  width: 20%;
+}
+
+button[onclick="ComeBack()"]:hover {
+  background-color: #0056b3;
+}

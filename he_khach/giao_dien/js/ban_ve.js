@@ -1,111 +1,143 @@
-// Hàm tra cứu lịch chiếu
-function traCuu() {
-  const tenPhim = document.getElementById("ten_phim").value;
-  const caChieu = document.getElementById("ca_chieu").value;
-  const ngayChieu = document.getElementById("ngay_chieu").value;
+function ComeBack() {
+  const userAccount = localStorage.getItem("account");
 
-  const query = `ten_phim=${tenPhim}&ca_chieu=${caChieu}&ngay_chieu=${ngayChieu}`;
-  const url = `http://localhost:5000/api/lich-chieu?${query}`;
-
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      const ketQuaDiv = document.getElementById("ket_qua");
-      ketQuaDiv.innerHTML = ""; // Xóa kết quả cũ
-
-      if (data.length > 0) {
-        const table = document.createElement("table");
-        table.innerHTML = `
-                  <thead>
-                      <tr>
-                          <th>Tên Phim</th>
-                          <th>Ca Chiếu</th>
-                          <th>Giờ Chiếu</th>
-                          <th>Ngày Chiếu</th>
-                          <th>Phòng Chiếu</th>
-                          <th>Số Ghế</th>
-                          <th>Chọn</th>
-                      </tr>
-                  </thead>
-                  <tbody></tbody>
-              `;
-        const tbody = table.querySelector("tbody");
-
-        data.forEach((item) => {
-          const caChieuGio = {
-            Sáng: "9h00 - 11h00",
-            Chiều: "14h00 - 16h00",
-            Tối1: "18h00 - 20h00",
-            Tối2: "20h30 - 22h30",
-          };
-
-          const row = document.createElement("tr");
-          row.innerHTML = `
-                      <td>${item.ten_phim}</td>
-                      <td>${item.ca_chieu}</td>
-                      <td>${caChieuGio[item.ca_chieu]}</td>
-                      <td>${item.ngay_chieu}</td>
-                      <td>${item.phong_chieu}</td>
-                      <td>${item.so_ghe}</td>
-                      <td><button onclick="chonVe(${item.id}, ${
-            item.so_ghe
-          })">Chọn Ghế</button></td>
-                  `;
-          tbody.appendChild(row);
-        });
-
-        ketQuaDiv.appendChild(table);
-      } else {
-        ketQuaDiv.innerHTML = "<p>Không tìm thấy kết quả.</p>";
-      }
-    })
-    .catch((error) => {
-      console.error("Lỗi khi tra cứu:", error);
-      document.getElementById("ket_qua").innerHTML =
-        "<p>Đã xảy ra lỗi. Vui lòng thử lại sau.</p>";
-    });
+  if (userAccount === "nhanvien1") {
+    window.location.href = "nhan_vien1.html";
+  } else if (userAccount === "nhanvien2") {
+    window.location.href = "nhan_vien2.html";
+  } else if (userAccount === "nhanvien3") {
+    window.location.href = "nhan_vien3.html";
+  } else window.location.href = "nhan_vien4.html";
 }
 
-// Hàm chọn vé và hiển thị sơ đồ ghế
-function chonVe(id, soGhe) {
-  const soDoGheDiv = document.getElementById("so_do_ghe");
-  soDoGheDiv.innerHTML = ""; // Xóa sơ đồ ghế cũ
+// Lấy dữ liệu phim, rạp chiếu từ các endpoint
+const getPhim = async () => {
+  const response = await fetch("/ban-ve/phim");
+  const phimData = await response.json();
+  const phimSelect = document.getElementById("phim");
+  phimData.forEach((phim) => {
+    const option = document.createElement("option");
+    option.value = phim.ten_phim;
+    option.textContent = phim.ten_phim;
+    phimSelect.appendChild(option);
+  });
+};
+
+const getRapChieu = async () => {
+  const response = await fetch("/ban-ve/rap-chieu");
+  const rapChieuData = await response.json();
+  const rapSelect = document.getElementById("rap");
+  rapChieuData.forEach((rap) => {
+    const option = document.createElement("option");
+    option.value = rap.ten_rap;
+    option.textContent = rap.ten_rap;
+    rapSelect.appendChild(option);
+  });
+};
+
+// Hiển thị lịch chiếu dựa trên các lựa chọn
+const showLichChieu = async () => {
+  const phim = document.getElementById("phim").value;
+  const rap = document.getElementById("rap").value;
+  const caChieu = document.getElementById("ca_chieu").value;
+
+  if (phim && rap && caChieu) {
+    const response = await fetch("/ban-ve/lich-chieu", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ten_phim: phim,
+        rap_chieu: rap,
+        ca_chieu: caChieu,
+      }),
+    });
+    const data = await response.json();
+    if (data.lich_chieu) {
+      renderLichChieu(data.lich_chieu);
+    } else {
+      alert("Không có lịch chiếu trùng khớp!");
+    }
+  } else {
+    alert("Vui lòng chọn đầy đủ thông tin!");
+  }
+};
+
+// Hiển thị danh sách lịch chiếu
+const renderLichChieu = (lichChieu) => {
+  const lichChieuList = document.getElementById("lich_chieu_list");
+  lichChieuList.innerHTML = ""; // Clear list
+  lichChieu.forEach((lich) => {
+    const div = document.createElement("div");
+    div.classList.add("lich-chieu");
+    div.innerHTML = `
+          <p>Phim: ${lich.ten_phim}, Rạp: ${lich.rap_chieu}, Ca chiếu: ${lich.ca_chieu}</p>
+          <button onclick="showSeatChart('${lich.phong_chieu}', ${lich.so_ghe})">Chọn ghế</button>
+      `;
+    lichChieuList.appendChild(div);
+  });
+};
+
+// Hiển thị sơ đồ ghế
+const showSeatChart = (phongChieu, soGhe) => {
+  const seatChart = document.getElementById("seat_chart");
+  seatChart.style.display = "block";
+  seatChart.innerHTML = ""; // Clear previous seats
 
   // Tạo sơ đồ ghế
   for (let i = 1; i <= soGhe; i++) {
-    const button = document.createElement("button");
-    button.innerText = `Ghế ${i}`;
-    button.onclick = () => chonGhese(id, i);
-    soDoGheDiv.appendChild(button);
+    const seat = document.createElement("button");
+    seat.classList.add("seat");
+    seat.textContent = `Ghế ${i}`;
+    seat.onclick = () => selectSeat(seat, i);
+    seatChart.appendChild(seat);
   }
+};
 
-  // Hiển thị form đặt vé
-  document.getElementById("form_dat_ve").style.display = "block";
-}
-
-// Hàm chọn ghế
-function chonGhese(id, ghe) {
-  // Lưu ghế đã chọn vào một biến toàn cục hoặc trong session để gửi khi bán vé
-  console.log(`Chọn ghế ${ghe} cho lịch chiếu ${id}`);
-}
+// Xử lý sự kiện chọn ghế
+let selectedSeats = [];
+const selectSeat = (seat, index) => {
+  if (seat.style.backgroundColor === "red") {
+    seat.style.backgroundColor = ""; // Deselect seat
+    selectedSeats = selectedSeats.filter((seat) => seat !== index);
+  } else {
+    seat.style.backgroundColor = "red"; // Select seat
+    selectedSeats.push(index);
+  }
+};
 
 // Xác nhận bán vé
-function xacNhanBanVe() {
-  const seats = [1, 2, 3]; // Danh sách ghế đã chọn, ví dụ ghế 1, 2, 3 (cần lấy từ giao diện người dùng)
-  const idLichChieu = 1; // ID của lịch chiếu đang chọn (lấy từ khi chọn ghế)
+const confirmBooking = () => {
+  const tenPhim = document.getElementById("phim").value;
+  const rap = document.getElementById("rap").value;
+  const caChieu = document.getElementById("ca_chieu").value;
+  const nhanVien = "Nhân viên 1"; // Example, can be dynamic
 
-  fetch(`http://localhost:5000/api/ban-ve/${idLichChieu}`, {
+  fetch("/ban-ve/ban-ve", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ seats: seats }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ten_phim: tenPhim,
+      rap_chieu: rap,
+      ca_chieu: caChieu,
+      soGheChon: selectedSeats,
+      nhanVien: nhanVien,
+    }),
   })
     .then((response) => response.json())
     .then((data) => {
-      alert(data.message); // Thông báo bán vé thành công
-    })
-    .catch((error) => {
-      console.error("Lỗi khi bán vé:", error);
+      if (data.message) {
+        alert(data.message);
+      }
     });
-}
+};
+
+document
+  .getElementById("showSeatsBtn")
+  .addEventListener("click", showLichChieu);
+document
+  .getElementById("confirmBookingBtn")
+  .addEventListener("click", confirmBooking);
+
+// Khởi tạo dữ liệu
+getPhim();
+getRapChieu();

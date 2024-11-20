@@ -1,0 +1,160 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-image: url("../images/background.jpg"); /* Đường dẫn đến hình ảnh */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  color: #ffffff; /* Màu chữ trắng để dễ nhìn trên nền */
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  color: #ffdd57; /* Màu chữ nổi bật */
+}
+
+div {
+  background-color: rgba(0, 0, 0, 0.6); /* Hộp nền đen mờ */
+  padding: 20px;
+  border-radius: 10px;
+  width: 30%;
+  margin: 20px auto;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+  width: 80%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #ff5722; /* Màu cam */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  width: 50%; /* Nút chiếm toàn bộ chiều rộng */
+}
+
+button:hover {
+  background-color: #e64a19;
+}
+
+#ket_qua {
+  margin-top: 20px;
+  background-color: rgba(14, 149, 222, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow-x: auto; /* Đảm bảo bảng hiển thị tốt trên các màn hình nhỏ */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th,
+td {
+  border: 1px solid #9fd7e0;
+  padding: 5px;
+  text-align: center;
+}
+
+th {
+  background-color: #11477b; /* Màu nền tiêu đề */
+  color: rgb(238, 238, 243);
+}
+
+tr:nth-child(even) {
+  background-color: #259ed3; /* Màu nền hàng chẵn */
+}
+
+tr:hover {
+  background-color: #e5eb3a; /* Màu nền khi hover */
+}
+
+td {
+  font-size: 14px;
+}
+
+p {
+  color: #333;
+  font-size: 16px;
+  text-align: center;
+}
+button[onclick="ComeBack()"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  margin-left: 1000px;
+  margin-right: 10px;
+  transition: background-color 0.3s;
+  width: 20%;
+}
+
+button[onclick="ComeBack()"]:hover {
+  background-color: #0056b3;
+}
+
+#ket_qua {
+  display: flex;
+  flex-wrap: wrap; /* Cho phép các phần tử vượt quá chiều rộng và xuống dòng */
+  gap: 20px; /* Khoảng cách giữa các item */
+}
+
+.list-item {
+  display: flex;
+  flex-direction: column; /* Các phần tử trong list-item sẽ xếp theo chiều dọc */
+  width: 200px; /* Chiều rộng cố định của mỗi item */
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  align-items: center;
+  background-color: #f9f9f9;
+}
+
+.list-item img {
+  width: 120px;
+  height: 180px;
+  margin-bottom: 10px; /* Khoảng cách giữa hình ảnh và thông tin */
+  border-radius: 8px;
+}
+
+.list-item-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-item-info p {
+  margin: 5px 0;
+  text-align: center; /* Canh giữa văn bản */
+}
+
+.list-item-info p strong {
+  color: #333;
+}

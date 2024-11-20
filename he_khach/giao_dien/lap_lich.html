@@ -3,19 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <title>Lập Lịch Chiếu Phim</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/laplich.css" />
   </head>
   <body>
     <h1>Lập Lịch Chiếu Phim</h1>
     <button onclick="ComeBack()">Trở về trang chính</button>
     <form id="scheduleForm">
+      <label for="rap_chieu">Rạp Chiếu:</label>
+      <select id="rap_chieu" required>
+        <option value="">Chọn rạp chiếu</option>
+        <option value="">Chọn rạp</option>
+      </select>
+
       <label for="film">Tên Phim:</label>
-      <select id="film" name="film">
+      <select id="film" name="film" required>
         <option value="">Chọn phim</option>
       </select>
 
       <label for="phong_chieu">Phòng Chiếu:</label>
-      <select id="phong_chieu">
+      <select id="phong_chieu" required>
+        <option value="">Chọn phòng chiếu</option>
         <option value="1">Phòng 1</option>
         <option value="2">Phòng 2</option>
         <option value="3">Phòng 3</option>
@@ -25,13 +32,15 @@
       </select>
 
       <label for="loai_phong">Loại Phòng:</label>
-      <select id="loai_phong" name="loai_phong">
+      <select id="loai_phong" name="loai_phong" required>
+        <option value="">Chọn loại phòng</option>
         <option value="1" data-ghe="100">Loại 1 (100 ghế)</option>
         <option value="2" data-ghe="60">Loại 2 (60 ghế)</option>
       </select>
 
       <label for="ca_chieu">Ca Chiếu:</label>
-      <select id="ca_chieu">
+      <select id="ca_chieu" required>
+        <option value="">Chọn ca chiếu</option>
         <option value="Sáng: 9h00-11h00">Sáng: 9h00-11h00</option>
         <option value="Chiều: 14h00-16h00">Chiều: 14h00-16h00</option>
         <option value="Tối: 18h00-20h00">Tối: 18h00-20h00</option>
@@ -39,7 +48,7 @@
       </select>
 
       <label for="ngay_chieu">Ngày Chiếu:</label>
-      <input type="date" id="ngay_chieu" name="ngay_chieu" />
+      <input type="date" id="ngay_chieu" name="ngay_chieu" required />
 
       <button type="submit">Lập Lịch</button>
     </form>
@@ -48,20 +57,19 @@
     <table id="scheduleTable">
       <thead>
         <tr>
+          <th>Rạp Chiếu</th>
           <th>Tên Phim</th>
           <th>Phòng Chiếu</th>
           <th>Loại Phòng</th>
           <th>Ca Chiếu</th>
           <th>Ngày Chiếu</th>
           <th>Số Ghế</th>
-          <th>Thao Tác</th>
         </tr>
       </thead>
       <tbody>
         <!-- Lịch chiếu sẽ được hiển thị ở đây -->
       </tbody>
     </table>
-
     <script src="js/lap_lich.js"></script>
   </body>
 </html>

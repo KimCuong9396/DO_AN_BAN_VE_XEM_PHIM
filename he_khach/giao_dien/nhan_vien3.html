@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang Nhân Viên</title>
+    <link rel="stylesheet" href="./css/nhanvien.css" />
+    <!-- Thêm liên kết tới CSS -->
+  </head>
+  <body>
+    <h1>Chào mừng Nhân Viên 3</h1>
+    <button onclick="logout()">Đăng Xuất</button>
+    <ul>
+      <li><a href="ban_ve.html">Bán vé</a></li>
+      <li><a href="tra_cuu.html">Tra cứu xuất chiếu</a></li>
+    </ul>
+
+    <script>
+      function logout() {
+        // Quay về trang đăng nhập
+        window.location.href = "login.html";
+      }
+    </script>
+  </body>
+</html>

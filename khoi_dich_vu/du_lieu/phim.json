@@ -2,16 +2,19 @@
   {
     "ten_phim": "Phim 1",
     "ma_so": "P001",
-    "thoi_luong": 120
+    "thoi_luong": 120,
+    "hinh_anh": "image/phim1.jpg"
   },
   {
     "ten_phim": "Phim 2",
     "ma_so": "P002",
-    "thoi_luong": 100
+    "thoi_luong": 100,
+    "hinh_anh": "image/phim2.jpg"
   },
   {
     "ten_phim": "Phim 3",
     "ma_so": "P003",
-    "thoi_luong": 150
+    "thoi_luong": 150,
+    "hinh_anh": "image/phim3.jpg"
   }
 ]

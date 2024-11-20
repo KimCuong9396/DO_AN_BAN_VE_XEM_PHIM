@@ -1,66 +1,52 @@
 const fs = require("fs");
 const path = require("path");
+const lapLichFile = path.join(__dirname, "../du_lieu/lap_lich.json");
+const veBanFile = path.join(__dirname, "../du_lieu/ve_ban.json");
 
-// Đọc dữ liệu từ file JSON (Giả lập dữ liệu cho bài học này)
-const duongDanLichChieu = path.join(__dirname, "../du_lieu/lich_chieu.json");
-let lichChieu = JSON.parse(fs.readFileSync(duongDanLichChieu, "utf-8"));
-
-// Tra cứu lịch chiếu theo các tiêu chí
-exports.traCuuLichChieu = (req, res) => {
-  const { ten_phim, ca_chieu, ngay_chieu } = req.query;
-
-  // Lọc danh sách lịch chiếu theo các tiêu chí
-  const ketQua = lichChieu.filter(
-    (item) =>
-      (!ten_phim || item.ten_phim.includes(ten_phim)) &&
-      (!ca_chieu || item.ca_chieu === ca_chieu) &&
-      (!ngay_chieu || item.ngay_chieu === ngay_chieu)
-  );
-
-  if (ketQua.length > 0) {
-    res.json(ketQua);
-  } else {
-    res.status(404).json({ message: "Không tìm thấy lịch chiếu phù hợp." });
-  }
-};
-
-// Lấy thông tin chi tiết lịch chiếu theo ID
-exports.layChiTietLichChieu = (req, res) => {
-  const { id } = req.params;
-  const lich = lichChieu.find((item) => item.id === parseInt(id));
-
-  if (lich) {
-    res.json(lich);
-  } else {
-    res.status(404).json({ message: "Lịch chiếu không tồn tại." });
-  }
-};
-
-// Bán vé và cập nhật số ghế còn lại
+// Hàm bán vé
 exports.banVe = (req, res) => {
-  const { id } = req.params;
-  const { seats } = req.body;
+  const { ten_phim, phong_chieu, so_ghe, username, ngay_ban } = req.body;
 
-  const lich = lichChieu.find((item) => item.id === parseInt(id));
+  // Đọc file ve_ban.json
+  fs.readFile(veBanFile, "utf8", (err, data) => {
+    if (err) return res.status(500).json({ message: "Lỗi đọc file vé bán." });
 
-  if (!lich) {
-    return res.status(404).json({ message: "Lịch chiếu không tồn tại." });
-  }
+    const veBanData = JSON.parse(data);
+    veBanData.push({ ten_phim, phong_chieu, so_ghe, username, ngay_ban });
 
-  // Kiểm tra số ghế còn lại
-  if (lich.so_ghe >= seats.length) {
-    // Cập nhật số ghế sau khi bán vé
-    lich.so_ghe -= seats.length;
+    // Ghi lại dữ liệu vào ve_ban.json
+    fs.writeFile(veBanFile, JSON.stringify(veBanData, null, 2), (err) => {
+      if (err) return res.status(500).json({ message: "Lỗi ghi file vé bán." });
 
-    // Lưu lại dữ liệu mới vào file JSON
-    fs.writeFileSync(
-      duongDanLichChieu,
-      JSON.stringify(lichChieu, null, 2),
-      "utf-8"
-    );
+      // Thành công
+      res.status(200).json({ message: "Bán vé thành công." });
+    });
+  });
+};
 
-    res.json({ message: "Bán vé thành công!" });
-  } else {
-    res.status(400).json({ message: "Số ghế không đủ." });
-  }
+// Hàm cập nhật lịch chiếu sau khi bán vé
+exports.capNhatLichChieu = (req, res) => {
+  const { phong_chieu, so_ghe } = req.body;
+
+  // Đọc file lap_lich.json
+  fs.readFile(lapLichFile, "utf8", (err, data) => {
+    if (err)
+      return res.status(500).json({ message: "Lỗi đọc file lịch chiếu." });
+
+    const lapLichData = JSON.parse(data);
+    const updatedData = lapLichData.map((item) => {
+      if (item.phong_chieu === phong_chieu) {
+        item.so_ghe = so_ghe; // Cập nhật số ghế
+      }
+      return item;
+    });
+
+    // Ghi lại dữ liệu vào lap_lich.json
+    fs.writeFile(lapLichFile, JSON.stringify(updatedData, null, 2), (err) => {
+      if (err)
+        return res.status(500).json({ message: "Lỗi ghi file lịch chiếu." });
+
+      res.status(200).json({ message: "Cập nhật lịch chiếu thành công." });
+    });
+  });
 };

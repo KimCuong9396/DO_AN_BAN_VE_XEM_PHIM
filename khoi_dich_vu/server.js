@@ -25,6 +25,7 @@ const authRoutes = require("./routes/authRoutes");
 const traCuuRoutes = require("./routes/traCuuRoutes");
 const lapLichRoutes = require("./routes/lapLichRoutes");
 const banVeRoutes = require("./routes/banVeRoutes");
+const thongKeRoutes = require("./routes/thongKeRoutes");
 
 const app = express();
 const port = 5000;
@@ -41,6 +42,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api", traCuuRoutes);
 app.use("/api/lapLich", lapLichRoutes);
 app.use("/api", banVeRoutes);
+
+app.use("/thong-ke", thongKeRoutes);
 
 // Chạy server
 app.listen(port, () => {
